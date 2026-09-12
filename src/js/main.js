@@ -659,6 +659,9 @@ videoBlocks.forEach((block) => {
 // Catalog__sort
 const catalogSortSelect = document.querySelector('.catalog__sort__select');
 const catalogSortItems = document.querySelectorAll('.catalog__sorting__item');
+const catalogSortTrigger = document.querySelector('[data-sort-trigger]');
+const catalogSortMobile = window.matchMedia('(max-width: 991px)');
+const catalogSortLabelMobile = catalogSortTrigger?.querySelector('.catalog__sort__label__mobile');
 let catalogSortToggled = false;
 
 const closeCatalogSort = () => {
@@ -666,11 +669,35 @@ const closeCatalogSort = () => {
   catalogSortToggled = false;
 };
 
+// Сортировка на мобильных (<991px): спан раскрывает/сворачивает аккордион.
+// Выбор элемента аккордион не закрывает — закрытие только кликом по спану.
+catalogSortTrigger?.addEventListener('click', (e) => {
+  if (!catalogSortMobile.matches) return;
+  e.stopPropagation();
+  const willOpen = catalogSortSelect && !catalogSortSelect.classList.contains('catalog__sort__select--open');
+  catalogSortSelect?.classList.toggle('catalog__sort__select--open');
+  if (catalogSortLabelMobile) {
+    catalogSortLabelMobile.textContent = willOpen ? 'закрыть' : 'выбор сортировки';
+  }
+});
+
 catalogSortItems.forEach((item) => {
   item.addEventListener('click', (e) => {
     e.stopPropagation();
-    const hasArrow = item.classList.contains('catalog__sorting__item--choice');
     const isActive = item.classList.contains('active');
+    const hasArrow = item.classList.contains('catalog__sorting__item--choice');
+
+    if (catalogSortMobile.matches) {
+      if (isActive) {
+        if (hasArrow) item.classList.toggle('sort-desc');
+        return;
+      }
+      catalogSortItems.forEach((el) => {
+        el.classList.remove('active', 'sort-desc');
+      });
+      item.classList.add('active');
+      return;
+    }
 
     if (isActive) {
       if (catalogSortSelect?.classList.contains('catalog__sort__select--open')) {
@@ -695,19 +722,10 @@ catalogSortItems.forEach((item) => {
 });
 
 document.addEventListener('click', (e) => {
+  if (catalogSortMobile.matches) return;
   if (!e.target.closest('.catalog__sort__select')) {
     closeCatalogSort();
   }
-});
-
-// Сортировка на мобильных (<991px): спан раскрывает/сворачивает аккордион
-const catalogSortTrigger = document.querySelector('[data-sort-trigger]');
-const catalogSortMobile = window.matchMedia('(max-width: 991px)');
-
-catalogSortTrigger?.addEventListener('click', (e) => {
-  if (!catalogSortMobile.matches) return;
-  e.stopPropagation();
-  catalogSortSelect?.classList.toggle('catalog__sort__select--open');
 });
 
 // Accordion

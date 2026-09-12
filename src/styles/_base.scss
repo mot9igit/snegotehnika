@@ -5129,10 +5129,14 @@ h1, h2, h3{
         font-weight: 500;
         color: var(--primary-color);
       }
-      img{
-        margin-bottom: 45px;
-        border-radius: 15px;
-        display: block;
+      .modal__img{
+        display: flex;
+        justify-content: center;
+        img{
+          margin-bottom: 45px;
+          border-radius: 15px;
+          display: block;
+        }
       }
       p{
         font-size: 18px;
@@ -9719,9 +9723,6 @@ body.modal-open{
           padding: 12px 20px;
           width: 100%;
           font-size: 16px;
-          & + .catalog__sorting__item{
-            margin-top: 20px;
-          }
         }
       }
     }
@@ -10911,6 +10912,7 @@ body.modal-open{
     .modal__dialog{
       padding: 60px 20px;
       width: 80vw;
+      max-width: none;
       min-width: 280px;
     }
     .modal__content{
