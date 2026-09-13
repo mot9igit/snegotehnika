@@ -739,23 +739,12 @@ if (accordion && accordionItems.length > 0) {
 
   setActiveAccordion(0);
 
-  accordionItems.forEach((item, index) => {
-    item.addEventListener('mouseenter', () => {
-      if (window.innerWidth > 991) {
-        setActiveAccordion(index);
-      }
-    });
-
+  accordionItems.forEach((item) => {
     item.querySelector('.accordion__button').addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
       accordionItems.forEach((el) => el.classList.remove('active'));
-      item.classList.add('active');
+      if (!isActive) item.classList.add('active');
     });
-  });
-
-  accordion.addEventListener('mouseleave', () => {
-    if (window.innerWidth > 991) {
-      setActiveAccordion(0);
-    }
   });
 }
 

@@ -61,6 +61,7 @@ h1, h2, h3{
   font-family: "Roboto", sans-serif;
 
   svg{
+    transition: all .2s ease;
     display: block;
     width: 24px;
     height: 24px;
@@ -93,6 +94,7 @@ h1, h2, h3{
   font-family: "Roboto", sans-serif;
 
   svg{
+    transition: all .2s ease;
     display: block;
     width: 24px;
     height: 24px;
@@ -790,6 +792,7 @@ h1, h2, h3{
           width: 32px;
           height: 32px;
           color: var(--secondary-color);
+          transition: all .2s ease;
         }
       }
       .accordion__content{
@@ -811,6 +814,7 @@ h1, h2, h3{
       &.active{
         .accordion__button{
           .accordion__icon{
+            transition: all .2s ease;
             transform: rotate(45deg);
           }
         }
@@ -987,6 +991,7 @@ h1, h2, h3{
       flex-direction: column;
       .catalog__item__img{
         img{
+          width: 100%;
           display: block;
         }
       }
@@ -1315,6 +1320,7 @@ h1, h2, h3{
             width: 32px;
             height: 32px;
             color: var(--secondary-color);
+            transition: all .2s ease;
           }
         }
         .accordion__content{
@@ -1336,6 +1342,7 @@ h1, h2, h3{
         &.active{
           .accordion__button{
             .accordion__icon{
+              transition: all .2s ease;
               transform: rotate(45deg);
             }
           }
@@ -9727,6 +9734,8 @@ body.modal-open{
       }
     }
     .catalog__container{
+      margin: 0px -15px;
+      gap: 5px;
       .catalog__item{
         .catalog__item__inner{
           padding: 22px 10px 22px 10px;

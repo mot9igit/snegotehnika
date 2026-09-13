@@ -34,7 +34,8 @@
 .side__navigation{
   display: inline-block;
   position: fixed;
-  top: 312px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 0;
   z-index: 400;
 
