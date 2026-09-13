@@ -250,25 +250,28 @@
               <h3>Снегоход от производителя</h3>
               <p>Подберем снегоход под Ваши задачи и бюджет</p>
               <div class="catalog__advertisement__buttons">
-                <input 
-                type="tel"
-                class="catalog__advertisement__input"
-                name="phone"
-                placeholder="Телефон"
-                autocomplete="tel"
-                pattern="[+]?[0-9\s\-\(\)]+"
-                >
-                <a class="catalog__advertisement__button" href="#">
-                  Подобрать снегоход
-                  <svg class="button__icon">
-                    <use xlink:href="#buttonArrow"></use>
-                  </svg>
-                </a>
-                <input type="checkbox" id="privacy__catalog" name="approval">
-                <label for="privacy__catalog" class="catalog__advertisement__approval">
+                <form action="/">
+                  <input 
+                  type="tel"
+                  class="catalog__advertisement__input"
+                  name="phone"
+                  placeholder="Телефон"
+                  autocomplete="tel"
+                  pattern="[+]?[0-9\s\-\(\)]+"
+                  required
+                  >
+                  <button type="submit" class="catalog__advertisement__button" href="#">
+                    Подобрать снегоход
+                    <svg class="button__icon">
+                      <use xlink:href="#buttonArrow"></use>
+                    </svg>
+                  </button>
+                  <input type="checkbox" id="privacy__catalog" name="approval" required>
+                  <label for="privacy__catalog" class="catalog__advertisement__approval">
                     <span class="check-circle"></span>
                     <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-                </label>
+                  </label>
+                </form>
               </div>
               <div class="catalog__advertisement__buttons catalog__advertisement__buttons--mobile">
                 <a href="#">Подобрать снегоход</a>
@@ -698,55 +701,57 @@
           <div class="modal__top">
             <h2><b>Расчет цены</b> Снегоход 4Т с двигателем Лончин</h2>
           </div>
-          <input type="text" placeholder="Ваш город">
-          <div class="modal__choice__item">
-            <h4>Выберите способ доставки</h4>
-            <div class="modal__choice__item__container">
-              <input type="checkbox" id="self‑pickup" name="approval">
-              <label for="self‑pickup" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>Самовывоз + подарок</div>
-              </label>
-              <input type="checkbox" id="special-rate" name="approval">
-              <label for="special-rate" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>ТК спецтариф - скидка до 20%</div>
-              </label>
+          <form action="/">
+            <input type="text" placeholder="Ваш город" required>
+            <div class="modal__choice__item">
+              <h4>Выберите способ доставки</h4>
+              <div class="modal__choice__item__container">
+                <input type="radio" id="self‑pickup" name="delivery-choice" checked>
+                <label for="self‑pickup" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>Самовывоз + подарок</div>
+                </label>
+                <input type="radio" id="special-rate" name="delivery-choice">
+                <label for="special-rate" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>ТК спецтариф - скидка до 20%</div>
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="modal__choice__item">
-            <h4>Счет, квитанция для оплаты в банке</h4>
-            <div class="modal__choice__item__container">
-              <input type="checkbox" id="bank-account" name="approval">
-              <label for="bank-account" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>Счет, квитанция для оплаты в банке</div>
-              </label>
-              <input type="checkbox" id="bank" name="approval">
-              <label for="bank" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>Банк. карта <b>Безопасно и быстро</b></div>
-              </label>
+            <div class="modal__choice__item">
+              <h4>Счет, квитанция для оплаты в банке</h4>
+              <div class="modal__choice__item__container">
+                <input type="radio" id="bank-account" name="payment-choice" checked>
+                <label for="bank-account" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>Счет, квитанция для оплаты в банке</div>
+                </label>
+                <input type="radio" id="bank" name="payment-choice">
+                <label for="bank" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>Банк. карта <b>Безопасно и быстро</b></div>
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="modal__phone">
-            <p>Ваш телефон:</p>
-            <input type="tel" placeholder="+79991234567">
-          </div>
-          <div class="modal__captcha">
-            
-          </div>
-          <button class="modal__btn">
-            получить рачет
-            <svg>
-              <use xlink:href="#buttonArrow"></use>
-            </svg>
-          </button>
-          <input type="checkbox" id="modal__calculation__approval" name="approval">
-          <label for="modal__calculation__approval" class="modal__approval">
-            <span class="check-circle"></span>
-            <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-          </label>
+            <div class="modal__phone">
+              <p>Ваш телефон:</p>
+              <input type="tel" placeholder="+79991234567" required>
+            </div>
+            <div class="modal__captcha">
+              
+            </div>
+            <button type="submit" class="modal__btn">
+              получить рачет
+              <svg>
+                <use xlink:href="#buttonArrow"></use>
+              </svg>
+            </button>
+            <input type="checkbox" id="modal__calculation__approval" name="approval" required>
+            <label for="modal__calculation__approval" class="modal__approval">
+              <span class="check-circle"></span>
+              <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
+            </label>
+          </form>
         </div>
       </div>
     </div>

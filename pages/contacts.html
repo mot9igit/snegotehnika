@@ -258,74 +258,76 @@
               <p>Если у вас возникли вопросы или проблемы с нашим оборудованием, пожалуйста, оставьте свои данные и опишите ситуацию. Мы постараемся решить все вопросы как можно быстрее.</p>
             </div>
             <div class="contacts__support__inputs">
-              <div class="contacts__support__inputs__top">
-                <div class="contacts__support__inputs__item">
-                  <span>Название изделия</span>
-                  <input type="text">
+              <form action="/">
+                <div class="contacts__support__inputs__top">
+                  <div class="contacts__support__inputs__item">
+                    <span>Название изделия</span>
+                    <input type="text" required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Номер изделия</span>
+                    <input type="number" required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Дата продажи</span>
+                    <input type="date" placeholder="../../.." required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Модель двигателя, мощность</span>
+                    <input type="text" required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Владелец</span>
+                    <input type="text" required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Телефон владельца</span>
+                    <input type="tel" placeholder="+79991234567" required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Контактное лицо</span>
+                    <input type="text" required>
+                  </div>
+                  <div class="contacts__support__inputs__item">
+                    <span>Телефон контактного лица</span>
+                    <input type="tel" placeholder="+79991234567" required>
+                  </div>
                 </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Номер изделия</span>
-                  <input type="number">
+                <div class="contacts__support__input">
+                  <span>Подробное описание неисправности</span>
+                  <textarea rows="5" required></textarea>
                 </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Дата продажи</span>
-                  <input type="date" placeholder="../../..">
+                <div class="contacts__support__input">
+                  <span>Что делали для устранения неисправности</span>
+                  <textarea rows="5" required></textarea>
                 </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Модель двигателя, мощность</span>
-                  <input type="text">
+                <div class="contacts__support__input contacts__support__input--file">
+                  <span>Видео и фото неисправности</span>
+                  <label class="contacts__support__file">
+                    <input type="file" class="contacts__support__file__input" required>
+                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M10.3478 32.6948C8.00124 32.6948 5.75076 31.7677 4.09147 30.1174C2.43218 28.467 1.5 26.2287 1.5 23.8948C1.5 21.5609 2.43218 19.3226 4.09147 17.6723C5.75076 16.022 8.00124 15.0948 10.3478 15.0948C11.9565 11.3348 15.6565 8.69482 20 8.69482C25.5178 8.69482 30.0383 12.9508 30.4565 18.3428L31.2609 18.2948C35.2826 18.2948 38.5 21.4948 38.5 25.4948C38.5 29.4948 35.2826 32.6948 31.2609 32.6948H10.3478ZM10.3478 16.6948C6.32609 16.6948 3.1087 19.8948 3.1087 23.8948C3.1087 27.8948 6.32609 31.0948 10.3478 31.0948H31.2609C32.7542 31.0948 34.1863 30.5048 35.2422 29.4546C36.2981 28.4044 36.8913 26.98 36.8913 25.4948C36.8913 24.0096 36.2981 22.5852 35.2422 21.535C34.1863 20.4848 32.7542 19.8948 31.2609 19.8948C30.36 19.8948 29.4913 20.1028 28.7352 20.4868L28.8478 19.0948C28.8478 16.7609 27.9156 14.5226 26.2564 12.8723C24.5971 11.222 22.3466 10.2948 20 10.2948C18.0593 10.2959 16.1725 10.9304 14.6294 12.101C13.0863 13.2716 11.9721 14.9136 11.4578 16.7748L10.3478 16.6948ZM20.8043 27.8948V19.4948L24.4239 23.0948L25.6304 22.0388L20 16.4388L14.3696 22.0388L15.5761 23.0948L19.1957 19.4948V27.8948H20.8043Z" fill="#3F71FF"/>
+                    </svg>
+                    <span class="contacts__support__file__text">Выберите файлы для загрузки или перетащите их мышью.</span>
+                  </label>
                 </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Владелец</span>
-                  <input type="text">
-                </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Телефон владельца</span>
-                  <input type="tel" placeholder="+79991234567">
-                </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Контактное лицо</span>
-                  <input type="text">
-                </div>
-                <div class="contacts__support__inputs__item">
-                  <span>Телефон контактного лица</span>
-                  <input type="tel" placeholder="+79991234567">
-                </div>
-              </div>
-              <div class="contacts__support__input">
-                <span>Подробное описание неисправности</span>
-                <textarea rows="5"></textarea>
-              </div>
-              <div class="contacts__support__input">
-                <span>Что делали для устранения неисправности</span>
-                <textarea rows="5"></textarea>
-              </div>
-              <div class="contacts__support__input contacts__support__input--file">
-                <span>Видео и фото неисправности</span>
-                <label class="contacts__support__file">
-                  <input type="file" class="contacts__support__file__input">
-                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.3478 32.6948C8.00124 32.6948 5.75076 31.7677 4.09147 30.1174C2.43218 28.467 1.5 26.2287 1.5 23.8948C1.5 21.5609 2.43218 19.3226 4.09147 17.6723C5.75076 16.022 8.00124 15.0948 10.3478 15.0948C11.9565 11.3348 15.6565 8.69482 20 8.69482C25.5178 8.69482 30.0383 12.9508 30.4565 18.3428L31.2609 18.2948C35.2826 18.2948 38.5 21.4948 38.5 25.4948C38.5 29.4948 35.2826 32.6948 31.2609 32.6948H10.3478ZM10.3478 16.6948C6.32609 16.6948 3.1087 19.8948 3.1087 23.8948C3.1087 27.8948 6.32609 31.0948 10.3478 31.0948H31.2609C32.7542 31.0948 34.1863 30.5048 35.2422 29.4546C36.2981 28.4044 36.8913 26.98 36.8913 25.4948C36.8913 24.0096 36.2981 22.5852 35.2422 21.535C34.1863 20.4848 32.7542 19.8948 31.2609 19.8948C30.36 19.8948 29.4913 20.1028 28.7352 20.4868L28.8478 19.0948C28.8478 16.7609 27.9156 14.5226 26.2564 12.8723C24.5971 11.222 22.3466 10.2948 20 10.2948C18.0593 10.2959 16.1725 10.9304 14.6294 12.101C13.0863 13.2716 11.9721 14.9136 11.4578 16.7748L10.3478 16.6948ZM20.8043 27.8948V19.4948L24.4239 23.0948L25.6304 22.0388L20 16.4388L14.3696 22.0388L15.5761 23.0948L19.1957 19.4948V27.8948H20.8043Z" fill="#3F71FF"/>
-                  </svg>
-                  <span class="contacts__support__file__text">Выберите файлы для загрузки или перетащите их мышью.</span>
+                <input type="checkbox" id="privacy__contacts" name="approval" required>
+                <label for="privacy__contacts" class="contacts__approval">
+                  <span class="check-circle"></span>
+                  <div>Нажимая на кнопку "Отправить", я даю своё согласие на обработку моих персональных данных</div>
                 </label>
-              </div>
-              <input type="checkbox" id="privacy__contacts" name="approval">
-              <label for="privacy__contacts" class="contacts__approval">
-                <span class="check-circle"></span>
-                <div>Нажимая на кнопку "Отправить", я даю своё согласие на обработку моих персональных данных</div>
-              </label>
-              <input type="checkbox" id="contacts__warranty" name="approval">
-              <label for="contacts__warranty" class="contacts__approval">
-                <span class="check-circle"></span>
-                <div>С правилами гарантийного обслуживания ознакомлен</div>
-              </label>
-              <button class="contacts__support__send-btn">
-                Отправить обращение
-                <svg>
-                  <use xlink:href="#buttonArrow"></use>
-                </svg>
-              </button>
+                <input type="checkbox" id="contacts__warranty" name="approval" required>
+                <label for="contacts__warranty" class="contacts__approval">
+                  <span class="check-circle"></span>
+                  <div>С правилами гарантийного обслуживания ознакомлен</div>
+                </label>
+                <button type="submit" class="contacts__support__send-btn">
+                  Отправить обращение
+                  <svg>
+                    <use xlink:href="#buttonArrow"></use>
+                  </svg>
+                </button>
+              </form>
             </div>
           </div>
 

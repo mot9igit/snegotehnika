@@ -360,22 +360,24 @@
                   <img src="img/icons/max.svg" alt="">
                 </a>
               </div>
-              <input type="email" name="email" placeholder="Email" class="sets__email">
-              <div class="sets__captcha">Каптча</div>
-              <a href="#" class="sets__button">
-                <div>
-                  <span>Получить каталог</span>
-                  <p>с подборкой 5 каталогов</p>
-                </div>
-                <svg class="button__icon">
-                  <use xlink:href="#buttonArrow"></use>
-                </svg>
-              </a>
-              <input type="checkbox" id="privacy" name="approval">
-              <label for="privacy" class="sets__approval">
-                  <span class="check-circle"></span>
-                  <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-              </label>
+              <form action="/">
+                <input type="email" name="email" placeholder="Email" class="sets__email" required>
+                <div class="sets__captcha">Каптча</div>
+                <button type="submit" class="sets__button">
+                  <div class="sets__button__container">
+                    <span>Получить каталог</span>
+                    <p>с подборкой 5 каталогов</p>
+                  </div>
+                  <svg class="button__icon">
+                    <use xlink:href="#buttonArrow"></use>
+                  </svg>
+                </button>
+                <input type="checkbox" id="privacy" name="approval" required>
+                <label for="privacy" class="sets__approval">
+                    <span class="check-circle"></span>
+                    <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
+                </label>
+              </form>
             </div>
             <div class="sets__right">
               <img src="img/sets/sets-bg.jpg" alt="" class="sets__right__bg">
@@ -407,25 +409,28 @@
               </a>
             </div>
             <div class="dealer__buttons__mobile">
-              <input 
-              type="tel"
-              class="dealer__input"
-              name="phone"
-              placeholder="Ваш телефон"
-              autocomplete="tel"
-              pattern="[+]?[0-9\s\-\(\)]+"
-              >
-              <a class="dealer__button" href="#">
-                запрос на звонок
-                <svg class="button__icon">
-                  <use xlink:href="#buttonArrow"></use>
-                </svg>
-              </a>
-              <input type="checkbox" id="privacy__dealer" name="approval">
-              <label for="privacy__dealer" class="dealer__approval">
-                  <span class="check-circle"></span>
-                  <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-              </label>
+              <form action="/">
+                <input 
+                type="tel"
+                class="dealer__input"
+                name="phone"
+                placeholder="Ваш телефон"
+                autocomplete="tel"
+                pattern="[+]?[0-9\s\-\(\)]+"
+                required
+                >
+                <button type="submit" class="dealer__button">
+                  запрос на звонок
+                  <svg class="button__icon">
+                    <use xlink:href="#buttonArrow"></use>
+                  </svg>
+                </button>
+                <input type="checkbox" id="privacy__dealer" name="approval" required>
+                <label for="privacy__dealer" class="dealer__approval">
+                    <span class="check-circle"></span>
+                    <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
+                </label>
+              </form>
             </div>
           </div>
         </div>

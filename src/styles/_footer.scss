@@ -36,12 +36,18 @@ footer {
     border-radius: 8px;
     width: 60px;
     height: 60px;
+    transition: all .2s ease;
+    .icon-arrow-top:before{
+      transition: all .2s ease;
+    }
     span{
       font-size: 24px;
     }
     &:hover{
       background-color: var(--primary-color);
+      transition: all .2s ease;
       .icon-arrow-top:before{
+        transition: all .2s ease;
         color: var(--secondary-color);
       }
     }

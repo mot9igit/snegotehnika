@@ -69,6 +69,8 @@ document.querySelectorAll(".model__choice__dropdown").forEach((dropdown) => {
     if (!item) return;
     const text = dropdown.querySelector(".model__choice__btn__text");
     if (text) text.textContent = item.textContent;
+    const radio = item.querySelector('input[type="radio"]');
+    if (radio) radio.checked = true;
     list.querySelectorAll(".model__choice__item").forEach((el) => {
       el.classList.toggle("active", el === item);
     });
@@ -772,27 +774,6 @@ collapseButtons.forEach(button =>{
   });
 });
 
-// cart__buttons
-const deliveryButtons = document.querySelectorAll('.delivery-choice__button');
-deliveryButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        deliveryButtons.forEach(item => {
-            item.classList.remove('active');
-        });
-        button.classList.add('active');
-    });
-});
-
-const paymentButtons = document.querySelectorAll('.payment-choice__button');
-paymentButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        paymentButtons.forEach(item => {
-            item.classList.remove('active');
-        });
-        button.classList.add('active');
-    });
-});
-
 // cart__payment__promocode button active state
 const promocodeInput = document.querySelector('.cart__payment__promocode input');
 const promocodeButton = document.querySelector('.cart__payment__promocode button');
@@ -1101,4 +1082,44 @@ setScrollbars.forEach((scrollbar) => {
     document.addEventListener('mousemove', onMove);
     document.addEventListener('mouseup', onUp);
   });
+});
+
+// New-blocks tags: collapse to 2 lines, show "Показать Все" button on overflow
+document.querySelectorAll(".new__blocks__tags").forEach((block) => {
+  const list = block.querySelector(".new__blocks__tags__container");
+  const button = block.querySelector(".button__show__items");
+  if (!list || !button) return;
+
+  const update = () => {
+    list.style.maxHeight = "";
+    list.style.overflow = "";
+    block.classList.remove("is-collapsed");
+
+    const first = list.querySelector("li");
+    if (!first) return;
+
+    const liHeight = first.getBoundingClientRect().height;
+    const rowGap = parseFloat(getComputedStyle(list).rowGap) || 15;
+    const twoLines = liHeight * 2 + rowGap;
+
+    if (list.scrollHeight > twoLines + 1) {
+      block.classList.add("is-collapsed");
+      list.style.maxHeight = twoLines + "px";
+      list.style.overflow = "hidden";
+    }
+  };
+
+  button.addEventListener("click", () => {
+    block.classList.remove("is-collapsed");
+    list.style.maxHeight = "";
+    list.style.overflow = "";
+  });
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(update, 150);
+  });
+
+  update();
 });

@@ -1788,57 +1788,59 @@
         </button>
         <div class="modal__content">
           <div class="modal__top">
-            <h2><b>Расчет цены</b> Снегоход 2Т с двигателем РМЗ длинный</h2>
+            <h2><b>Расчет цены</b> Снегоход 4Т с двигателем Лончин</h2>
           </div>
-          <input type="text" placeholder="Ваш город">
-          <div class="modal__choice__item">
-            <h4>Выберите способ доставки</h4>
-            <div class="modal__choice__item__container">
-              <input type="checkbox" id="self‑pickup" name="approval">
-              <label for="self‑pickup" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>Самовывоз + подарок</div>
-              </label>
-              <input type="checkbox" id="special-rate" name="approval">
-              <label for="special-rate" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>ТК спецтариф - скидка до 20%</div>
-              </label>
+          <form action="/">
+            <input type="text" placeholder="Ваш город" required>
+            <div class="modal__choice__item">
+              <h4>Выберите способ доставки</h4>
+              <div class="modal__choice__item__container">
+                <input type="radio" id="self‑pickup" name="delivery-choice" checked>
+                <label for="self‑pickup" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>Самовывоз + подарок</div>
+                </label>
+                <input type="radio" id="special-rate" name="delivery-choice">
+                <label for="special-rate" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>ТК спецтариф - скидка до 20%</div>
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="modal__choice__item">
-            <h4>Счет, квитанция для оплаты в банке</h4>
-            <div class="modal__choice__item__container">
-              <input type="checkbox" id="bank-account" name="approval">
-              <label for="bank-account" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>Счет, квитанция для оплаты в банке</div>
-              </label>
-              <input type="checkbox" id="bank" name="approval">
-              <label for="bank" class="modal__choice">
-                <span class="check-circle"></span>
-                <div>Банк. карта <b>Безопасно и быстро</b></div>
-              </label>
+            <div class="modal__choice__item">
+              <h4>Счет, квитанция для оплаты в банке</h4>
+              <div class="modal__choice__item__container">
+                <input type="radio" id="bank-account" name="payment-choice" checked>
+                <label for="bank-account" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>Счет, квитанция для оплаты в банке</div>
+                </label>
+                <input type="radio" id="bank" name="payment-choice">
+                <label for="bank" class="modal__choice">
+                  <span class="check-circle"></span>
+                  <div>Банк. карта <b>Безопасно и быстро</b></div>
+                </label>
+              </div>
             </div>
-          </div>
-          <div class="modal__phone">
-            <p>Ваш телефон:</p>
-            <input type="tel" placeholder="+79991234567">
-          </div>
-          <div class="modal__captcha">
-            
-          </div>
-          <button class="modal__btn">
-            получить рачет
-            <svg>
-              <use xlink:href="#buttonArrow"></use>
-            </svg>
-          </button>
-          <input type="checkbox" id="modal__calculation__approval" name="approval">
-          <label for="modal__calculation__approval" class="modal__approval">
-            <span class="check-circle"></span>
-            <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-          </label>
+            <div class="modal__phone">
+              <p>Ваш телефон:</p>
+              <input type="tel" placeholder="+79991234567" required>
+            </div>
+            <div class="modal__captcha">
+              
+            </div>
+            <button type="submit" class="modal__btn">
+              получить рачет
+              <svg>
+                <use xlink:href="#buttonArrow"></use>
+              </svg>
+            </button>
+            <input type="checkbox" id="modal__calculation__approval" name="approval" required>
+            <label for="modal__calculation__approval" class="modal__approval">
+              <span class="check-circle"></span>
+              <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
+            </label>
+          </form>
         </div>
       </div>
     </div>
@@ -1944,57 +1946,59 @@
           </svg>
         </button>
         <div class="modal__content">
-          <div class="modal__top">
-            <h2>оставить отзыв о снеготехнике</h2>
-            <span>Ваше мнение поможет другим покупателям сделать правильный выбор</span>
-          </div>
-          <div class="modal__model__choice">
-            <h4>Модель техники</h4>
-            <div class="model__choice__dropdown">
-              <button class="model__choice__btn" type="button">
-                <span class="model__choice__btn__text">выберите модель</span>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5.25 7.5L9 11.25L12.75 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <ul class="model__choice__list">
-                <li class="model__choice__item">Снегоход Восток с двигателем Loncin</li>
-                <li class="model__choice__item">Снегоход 4Т с двигателем Лончин</li>
-                <li class="model__choice__item">Снегоход Шихан</li>
-                <li class="model__choice__item">Снегоход 2Т с двигателем РМЗ</li>
-                <li class="model__choice__item">Снегоход Восток с двигателем Loncin</li>
-                <li class="model__choice__item">Снегоход 4Т с двигателем Лончин</li>
-                <li class="model__choice__item">Снегоход Шихан</li>
-                <li class="model__choice__item">Снегоход 2Т с двигателем РМЗ</li>
-                <li class="model__choice__item">Снегоход Восток с двигателем Loncin</li>
-                <li class="model__choice__item">Снегоход 4Т с двигателем Лончин</li>
-                <li class="model__choice__item">Снегоход Шихан</li>
-                <li class="model__choice__item">Снегоход 2Т с двигателем РМЗ</li>
-              </ul>
+          <form action="/">
+            <div class="modal__top">
+              <h2>оставить отзыв о снеготехнике</h2>
+              <span>Ваше мнение поможет другим покупателям сделать правильный выбор</span>
             </div>
-          </div>
-          <div class="modal__reviews__item">
-            <h4>Ваш отзыв</h4>
-            <textarea name="modal-reviews-text" id="" rows="6" placeholder="Текст..."></textarea>
-          </div>
-          <div class="modal__reviews__item">
-            <input type="text" name="modal-reviews-name" placeholder="Ваше имя">
-          </div>
-          <div class="modal__reviews__item">
-            <input type="emai" name="modal-reviews-email" placeholder="Email">
-          </div>
-          <div class="modal__captcha"></div>
-          <div class="modal__btn">
-            отправить отзыв
-            <svg>
-              <use xlink:href="#buttonArrow"></use>
-            </svg>
-          </div>
-          <input type="checkbox" id="modal__reviews__approval" name="approval">
-          <label for="modal__reviews__approval" class="modal__approval">
-            <span class="check-circle"></span>
-            <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-          </label>
+            <div class="modal__model__choice">
+              <h4>Модель техники</h4>
+              <div class="model__choice__dropdown">
+                <button class="model__choice__btn" type="button">
+                  <span class="model__choice__btn__text">выберите модель</span>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.25 7.5L9 11.25L12.75 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <ul class="model__choice__list">
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-1" value="Снегоход Восток с двигателем Loncin" required><label for="model-1">Снегоход Восток с двигателем Loncin</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-2" value="Снегоход 4Т с двигателем Лончин"><label for="model-2">Снегоход 4Т с двигателем Лончин</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-3" value="Снегоход Шихан"><label for="model-3">Снегоход Шихан</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-4" value="Снегоход 2Т с двигателем РМЗ"><label for="model-4">Снегоход 2Т с двигателем РМЗ</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-5" value="Снегоход Восток с двигателем Loncin"><label for="model-5">Снегоход Восток с двигателем Loncin</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-6" value="Снегоход 4Т с двигателем Лончин"><label for="model-6">Снегоход 4Т с двигателем Лончин</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-7" value="Снегоход Шихан"><label for="model-7">Снегоход Шихан</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-8" value="Снегоход 2Т с двигателем РМЗ"><label for="model-8">Снегоход 2Т с двигателем РМЗ</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-9" value="Снегоход Восток с двигателем Loncin"><label for="model-9">Снегоход Восток с двигателем Loncin</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-10" value="Снегоход 4Т с двигателем Лончин"><label for="model-10">Снегоход 4Т с двигателем Лончин</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-11" value="Снегоход Шихан"><label for="model-11">Снегоход Шихан</label></li>
+                  <li class="model__choice__item"><input type="radio" name="model" id="model-12" value="Снегоход 2Т с двигателем РМЗ"><label for="model-12">Снегоход 2Т с двигателем РМЗ</label></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal__reviews__item">
+              <h4>Ваш отзыв</h4>
+              <textarea name="modal-reviews-text" id="" rows="6" placeholder="Текст..." required></textarea>
+            </div>
+            <div class="modal__reviews__item">
+              <input type="text" name="modal-reviews-name" placeholder="Ваше имя" required>
+            </div>
+            <div class="modal__reviews__item">
+              <input type="email" name="modal-reviews-email" placeholder="Email" required>
+            </div>
+            <div class="modal__captcha"></div>
+            <button type="submit" class="modal__btn">
+              отправить отзыв
+              <svg>
+                <use xlink:href="#buttonArrow"></use>
+              </svg>
+            </button>
+            <input type="checkbox" id="modal__reviews__approval" name="approval" required>
+            <label for="modal__reviews__approval" class="modal__approval">
+              <span class="check-circle"></span>
+              <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
+            </label>
+          </form>
         </div>
       </div>
     </div>
@@ -2008,54 +2012,56 @@
           </svg>
         </button>
         <div class="modal__content">
-          <div class="modal__top">
-            <h2>Задать вопрос</h2>
-            <span>Ответим в ближайшее время</span>
-          </div>
-          <input type="text" placeholder="Ваше имя">
-          <input type="email" placeholder="Email">
-          <input type="tel" placeholder="+7(___)___-__-__">
-          <div class="modal__model__choice">
-            <h4>Модель техники</h4>
-            <div class="model__choice__dropdown">
-              <button class="model__choice__btn" type="button">
-                <span class="model__choice__btn__text">выберите модель</span>
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M5.25 7.5L9 11.25L12.75 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
-              <ul class="model__choice__list">
-                <li class="model__choice__item">Снегоход Восток с двигателем Loncin</li>
-                <li class="model__choice__item">Снегоход 4Т с двигателем Лончин</li>
-                <li class="model__choice__item">Снегоход Шихан</li>
-                <li class="model__choice__item">Снегоход 2Т с двигателем РМЗ</li>
-                <li class="model__choice__item">Снегоход Восток с двигателем Loncin</li>
-                <li class="model__choice__item">Снегоход 4Т с двигателем Лончин</li>
-                <li class="model__choice__item">Снегоход Шихан</li>
-                <li class="model__choice__item">Снегоход 2Т с двигателем РМЗ</li>
-                <li class="model__choice__item">Снегоход Восток с двигателем Loncin</li>
-                <li class="model__choice__item">Снегоход 4Т с двигателем Лончин</li>
-                <li class="model__choice__item">Снегоход Шихан</li>
-                <li class="model__choice__item">Снегоход 2Т с двигателем РМЗ</li>
-              </ul>
+          <form action="/">
+            <div class="modal__top">
+              <h2>Задать вопрос</h2>
+              <span>Ответим в ближайшее время</span>
             </div>
-          </div>
-          <div class="modal__reviews__item">
-            <h4>Ваш вопрос</h4>
-            <textarea name="modal-reviews-text" id="" rows="6" placeholder="Текст..."></textarea>
-          </div>
-          <div class="modal__captcha"></div>
-          <div class="modal__btn">
-            отправить вопрос
-            <svg>
-              <use xlink:href="#buttonArrow"></use>
-            </svg>
-          </div>
-          <input type="checkbox" id="modal__questions__approval" name="approval">
-          <label for="modal__questions__approval" class="modal__approval">
-            <span class="check-circle"></span>
-            <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-          </label>
+            <input type="text" placeholder="Ваше имя" required>
+            <input type="email" placeholder="Email" required>
+            <input type="tel" placeholder="+7(___)___-__-__" required>
+            <div class="modal__model__choice">
+              <h4>Модель техники</h4>
+              <div class="model__choice__dropdown">
+                <button class="model__choice__btn" type="button">
+                  <span class="model__choice__btn__text">выберите модель</span>
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5.25 7.5L9 11.25L12.75 7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <ul class="model__choice__list">
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-1" value="Снегоход Восток с двигателем Loncin" required><label for="fac_model-1">Снегоход Восток с двигателем Loncin</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-2" value="Снегоход 4Т с двигателем Лончин"><label for="fac_model-2">Снегоход 4Т с двигателем Лончин</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-3" value="Снегоход Шихан"><label for="fac_model-3">Снегоход Шихан</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-4" value="Снегоход 2Т с двигателем РМЗ"><label for="fac_model-4">Снегоход 2Т с двигателем РМЗ</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-5" value="Снегоход Восток с двигателем Loncin"><label for="fac_model-5">Снегоход Восток с двигателем Loncin</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-6" value="Снегоход 4Т с двигателем Лончин"><label for="fac_model-6">Снегоход 4Т с двигателем Лончин</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-7" value="Снегоход Шихан"><label for="fac_model-7">Снегоход Шихан</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-8" value="Снегоход 2Т с двигателем РМЗ"><label for="fac_model-8">Снегоход 2Т с двигателем РМЗ</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-9" value="Снегоход Восток с двигателем Loncin"><label for="fac_model-9">Снегоход Восток с двигателем Loncin</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-10" value="Снегоход 4Т с двигателем Лончин"><label for="fac_model-10">Снегоход 4Т с двигателем Лончин</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-11" value="Снегоход Шихан"><label for="fac_model-11">Снегоход Шихан</label></li>
+                  <li class="model__choice__item"><input type="radio" name="fac_model" id="fac_model-12" value="Снегоход 2Т с двигателем РМЗ"><label for="fac_model-12">Снегоход 2Т с двигателем РМЗ</label></li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal__reviews__item">
+              <h4>Ваш вопрос</h4>
+              <textarea name="modal-reviews-text" id="" rows="6" placeholder="Текст..." required></textarea>
+            </div>
+            <div class="modal__captcha"></div>
+            <button type="submit" class="modal__btn">
+              отправить вопрос
+              <svg>
+                <use xlink:href="#buttonArrow"></use>
+              </svg>
+            </button>
+            <input type="checkbox" id="modal__questions__approval" name="approval" required>
+            <label for="modal__questions__approval" class="modal__approval">
+              <span class="check-circle"></span>
+              <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
+            </label>
+          </form>
         </div>
       </div>
     </div>
