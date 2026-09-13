@@ -230,21 +230,22 @@ footer {
     color: #fff;
     border: 1px var(--secondary-color) solid;
     border-radius: 8px;
+    transition: all .2s ease;
 
     svg{
       margin-left: 20px;
       width: 18px;
       height: 18px;
+      transition: transform .2s ease;
+      transform-origin: center;
     }
 
     &:hover{
       color: var(--secondary-color);
-      transition: all .2s;
 
       svg{
         transform: rotate(45deg);
         color: var(--secondary-color);
-        transition: all .2s;
       }
     }
   }

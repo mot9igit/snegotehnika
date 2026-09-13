@@ -976,13 +976,39 @@
             <div data-tab__content="reviews" class="product-card__reviews">
               <div class="product-card__reviews__top">
                 <h3>Отзывы покупателей</h3>
-                <!-- ВИджет яндекса -->
-                <button type="button" data-modal-open="modal-reviews">
-                  Оставить отзыв
-                  <svg class="button__icon">
-                    <use xlink:href="#buttonArrow"></use>
-                  </svg>
-                </button>
+                <div class="product-card__reviews__right">
+                  <div class="product-card__reviews__summarizing_reviews">
+                    <div class="summarizing_reviews__left">
+                      <h2>4,9</h2>
+                      <div class="summarizing_reviews__left__container">
+                        <span class="product-card__stars">
+                          <span class="product-card__stars__star"></span>
+                          <span class="product-card__stars__star"></span>
+                          <span class="product-card__stars__star"></span>
+                          <span class="product-card__stars__star"></span>
+                          <span class="product-card__stars__star"></span>
+                        </span>
+                        <span>132 оценки</span>
+                      </div>
+                    </div>
+                    <div class="summarizing_reviews__right">
+                      <p>Оцените это место</p>
+                      <span class="product-card__stars">
+                        <span class="product-card__stars__star"></span>
+                        <span class="product-card__stars__star"></span>
+                        <span class="product-card__stars__star"></span>
+                        <span class="product-card__stars__star"></span>
+                        <span class="product-card__stars__star"></span>
+                      </span>
+                    </div>
+                  </div>
+                  <button type="button" data-modal-open="modal-reviews">
+                    Оставить отзыв
+                    <svg class="button__icon">
+                      <use xlink:href="#buttonArrow"></use>
+                    </svg>
+                  </button>
+                </div>
               </div>
               <ul class="product-card__reviews__inner">
                 <li class="product-card__reviews__item">
@@ -1379,16 +1405,17 @@
                 <div class="product-card__set__list__scrollbar" data-set-scrollbar>
                   <div class="product-card__set__list__scrollbar__drag"></div>
                 </div>
-
-                <a href="#" class="product-card__set__list__receiveCatalog">
-                  <div>
-                    <span>рассчитать стоимость</span>
-                    <p>с учётом доставки и способа оплаты</p>
-                  </div>
-                  <svg class="button__icon">
-                    <use xlink:href="#buttonArrow"></use>
-                  </svg>
-                </a>
+                <div class="product-card__set__list__receiveCatalog">
+                  <a href="#" class="product-card__set__list__receiveCatalog__btn">
+                    <div>
+                      <span>рассчитать стоимость</span>
+                      <p>с учётом доставки и способа оплаты</p>
+                    </div>
+                    <svg class="button__icon">
+                      <use xlink:href="#buttonArrow"></use>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
