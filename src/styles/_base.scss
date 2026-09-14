@@ -944,13 +944,16 @@ h1, h2, h3{
     .catalog__sort__label{
       margin-right: 30px;
       padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-size: 14px;
       text-transform: uppercase;
       border-radius: 6px;
       font-weight: 500;
       background-color: var(--primary-color);
       color: #fff;
-      .catalog__sort__label__mobile{
+      .catalog__sort__label__icon{
         display: none;
       }
     }
@@ -7285,13 +7288,24 @@ body.modal-open{
     .catalog__sort{
       flex-wrap: wrap;
       .catalog__sort__label{
+        padding: 12.5px 20px;
+        margin-right: 0px;
         margin-bottom: 20px;
+        width: 100%;
         cursor: pointer;
-        .catalog__sort__label__text{
-          display: none;
-        }
-        .catalog__sort__label__mobile{
+        .catalog__sort__label__icon{
           display: block;
+          margin-left: 15px;
+          flex-shrink: 0;
+          width: 24px;
+          height: 24px;
+          color: #fff;
+          transition: all .2s ease;
+        }
+        &--open{
+          .catalog__sort__label__icon{
+            transform: rotate(45deg);
+          }
         }
       }
       .catalog__sort__select{
