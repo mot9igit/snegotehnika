@@ -3005,12 +3005,17 @@ h1, h2, h3{
               height: 24px;
               color: #fff;
             }
-            &:hover{
+            &:not(:disabled):hover{
               background-color: #9FC0FF;
               border-color: #9FC0FF;
               svg{
                 transform: rotate(0deg);
               }
+            }
+            &:disabled{
+              cursor: not-allowed;
+              background-color: #9FC0FF;
+              border-color: #9FC0FF;
             }
             &.active{
               background-color: var(--secondary-color);
@@ -3124,7 +3129,7 @@ h1, h2, h3{
   }
 }
 .delivery{
-  .delivery__delivery-terms__importante{
+  .delivery__delivery-terms__important{
     padding: 30px 45px;
     border-left: 2px var(--secondary-color) solid;
     font-size: 16px;
@@ -3343,9 +3348,9 @@ h1, h2, h3{
   }
   .delivery__transport-companies{
     margin-bottom: 90px;
-    .delivery__delivery-terms__importante{
+    .delivery__delivery-terms__important{
       text-transform: none;
-      & + .delivery__delivery-terms__importante{
+      & + .delivery__delivery-terms__important{
         margin-top: 35px;
       }
     }
@@ -3393,7 +3398,7 @@ h1, h2, h3{
       font-size: 40px;
       font-weight: 500;
     }
-    .delivery__delivery-terms__importante{
+    .delivery__delivery-terms__important{
       text-transform: none;
       p{
         display: block;
@@ -6633,7 +6638,7 @@ body.modal-open{
         }
       }
     }
-    .delivery__delivery-terms__importante{
+    .delivery__delivery-terms__important{
       padding: 20px 30px;
     }
     .delivery__intro{
@@ -9284,7 +9289,7 @@ body.modal-open{
         }
       }
     }
-    .delivery__delivery-terms__importante{
+    .delivery__delivery-terms__important{
       padding: 10px 20px;
     }
     .delivery__intro{
@@ -10507,7 +10512,7 @@ body.modal-open{
         height: 24px;
       }
     }
-    .delivery__delivery-terms__importante{
+    .delivery__delivery-terms__important{
       font-size: 14px;
     }
     .delivery__intro{
@@ -10603,7 +10608,7 @@ body.modal-open{
         margin-bottom: 38px;
         font-size: 22px;
       }
-      .delivery__delivery-terms__importante{
+      .delivery__delivery-terms__important{
         p{
           & + p{
             margin-top: 20px;
@@ -11896,7 +11901,7 @@ body.modal-open{
       }
 
     }
-    .delivery__delivery-terms__importante{
+    .delivery__delivery-terms__important{
       padding: 0px 15px;
     }
     .delivery__intro{

@@ -741,9 +741,13 @@ collapseButtons.forEach(button =>{
 const promocodeInput = document.querySelector('.cart__payment__promocode input');
 const promocodeButton = document.querySelector('.cart__payment__promocode button');
 if (promocodeInput && promocodeButton) {
-  promocodeInput.addEventListener('input', () => {
-    promocodeButton.classList.toggle('active', promocodeInput.value.trim().length > 0);
-  });
+  const updatePromocode = () => {
+    const hasText = promocodeInput.value.trim().length > 0;
+    promocodeButton.classList.toggle('active', hasText);
+    promocodeButton.disabled = !hasText;
+  };
+  promocodeInput.addEventListener('input', updatePromocode);
+  updatePromocode();
 }
 
 // Cart page rendering
