@@ -88,11 +88,14 @@ document.addEventListener("click", (event) => {
 
 
 // side-navigation
-const sideNavigationBtn = document.querySelector('.side__navigation__close')
-const sideNavigationContent = document.querySelector('.side__navigation')
-sideNavigationBtn.addEventListener('click', () => {
-  sideNavigationContent.classList.toggle('hide')
-})
+const sideNavigationBtn = document.querySelector('.side__navigation__close');
+const sideNavigationContent = document.querySelector('.side__navigation');
+
+if (sideNavigationBtn && sideNavigationContent) {
+  sideNavigationBtn.addEventListener('click', () => {
+    sideNavigationContent.classList.toggle('hide');
+  });
+}
 
 
 
@@ -106,6 +109,7 @@ const defaultPlaceholder = 'Введите фразу для поиска';
 const mobilePlaceholder = 'Поиск';
 
 const updateSearchPlaceholder = () => {
+  if (!searchInput) return;
   searchInput.placeholder = window.innerWidth <= 430 ? mobilePlaceholder : defaultPlaceholder;
 };
 
@@ -127,8 +131,8 @@ const unlockBodyScroll = () => {
 
 const syncScrollLock = () => {
   if (
-    MenuSidebar.classList.contains('active') ||
-    CatalogInner.classList.contains('active')
+    MenuSidebar?.classList.contains('active') ||
+    CatalogInner?.classList.contains('active')
   ) {
     lockBodyScroll();
   } else {
@@ -137,20 +141,23 @@ const syncScrollLock = () => {
 };
 
 // Menu
-const MenuBtn = document.querySelector('.header__menu__btn')
-const MenuSidebar = document.querySelector('.header__menu__sidebar')
+const MenuBtn = document.querySelector('.header__menu__btn');
+const MenuSidebar = document.querySelector('.header__menu__sidebar');
 
-MenuBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  MenuBtn.classList.toggle('active');
-  MenuSidebar.classList.toggle('active');
+if (MenuBtn && MenuSidebar) {
+  MenuBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    MenuBtn.classList.toggle('active');
+    MenuSidebar.classList.toggle('active');
 
-  CatalogBurger.classList.remove('active');
-  CatalogInner.classList.remove('active');
-  syncScrollLock();
-});
+    CatalogBurger?.classList.remove('active');
+    CatalogInner?.classList.remove('active');
+    syncScrollLock();
+  });
+}
 
 document.addEventListener('click', (e) => {
+  if (!MenuBtn || !MenuSidebar) return;
   if (
     !MenuBtn.contains(e.target) &&
     !MenuSidebar.contains(e.target)
@@ -170,16 +177,19 @@ const CatalogMore = document.querySelector('.header__catalog__content');
 const items = document.querySelectorAll('.header__catalog__item');
 const groups = document.querySelectorAll('.header__catalog__dropdown .dropdown_group');
 // Открытие каталога
-CatalogBurger.addEventListener('click', () => {
-  CatalogBurger.classList.toggle('active');
-  CatalogInner.classList.toggle('active');
+if (CatalogBurger && CatalogInner) {
+  CatalogBurger.addEventListener('click', () => {
+    CatalogBurger.classList.toggle('active');
+    CatalogInner.classList.toggle('active');
 
-  MenuBtn.classList.remove('active');
-  MenuSidebar.classList.remove('active');
-  syncScrollLock();
-});
+    MenuBtn?.classList.remove('active');
+    MenuSidebar?.classList.remove('active');
+    syncScrollLock();
+  });
+}
 // Закрытие каталога при нажатии вне каталога
 document.addEventListener("click", (e) =>{
+  if (!CatalogBurger || !CatalogInner) return;
   if (
     !CatalogBurger.contains(e.target) &&
     !CatalogInner.contains(e.target)
@@ -192,7 +202,7 @@ document.addEventListener("click", (e) =>{
 
 // Пункт левого списка <li id="[[+id]]"> ищет свой блок <div class="dropdown_group" data-parent-id="[[+id]]">
 const getGroup = (item) => {
-  const id = item.id || item.dataset.category;
+  const id = item.id || item.dataset.id || item.dataset.category;
   if (!id) return null;
   return document.querySelector(`.header__catalog__dropdown .dropdown_group[data-parent-id="${CSS.escape(id)}"]`);
 };
@@ -213,7 +223,7 @@ const hideGroup = (group) => {
 
 const resetGroups = () => {
   groups.forEach(group => {
-    if (group.parentElement !== CatalogMore) {
+    if (CatalogMore && group.parentElement !== CatalogMore) {
       CatalogMore.append(group);
     }
     hideGroup(group);
@@ -222,7 +232,7 @@ const resetGroups = () => {
     el.classList.remove("active");
     el.classList.remove("hidden");
   });
-  CatalogMore.classList.remove("active");
+  if (CatalogMore) CatalogMore.classList.remove("active");
 };
 
 function openMobile(item) {
@@ -232,7 +242,7 @@ function openMobile(item) {
   if (item.classList.contains("active")) {
       item.classList.remove("active");
       hideGroup(group);
-      CatalogMore.append(group);
+      CatalogMore?.append(group);
       items.forEach(el => {
           el.classList.remove("hidden");
       });
@@ -932,12 +942,14 @@ document.querySelectorAll('.modal__cart__item .modal__cart__btn').forEach((btn, 
 // Scroll__footer
 const scrollTopButton = document.querySelector('[data-scroll-top]');
 
-scrollTopButton.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
+if (scrollTopButton) {
+  scrollTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   });
-});
+}
 
 // tabs mobile dropdown + tab switching
 const initTabsNav = (navSelector, itemSelector, openClass) => {
