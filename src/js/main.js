@@ -285,26 +285,24 @@ window.addEventListener('resize', () => {
 });
 
 items.forEach(item => {
-  const hasChildren = item.classList.contains('has-children');
   const group = getGroup(item);
+  if (!group) return;
 
-  if (hasChildren && group) {
-    item.addEventListener("mouseenter", () => {
-      if (window.innerWidth > 992) {
-        openDesktop(item);
-      }
-    });
+  item.addEventListener("mouseenter", () => {
+    if (window.innerWidth > 992) {
+      openDesktop(item);
+    }
+  });
 
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (window.innerWidth > 992) {
-        openDesktop(item);
-      } else {
-        openMobile(item);
-      }
-    });
-  }
+  item.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (window.innerWidth > 992) {
+      openDesktop(item);
+    } else {
+      openMobile(item);
+    }
+  });
 })
 
 // Offers__swiper
