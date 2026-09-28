@@ -168,7 +168,7 @@ const CatalogBurger = document.querySelector('.header__catalog__toggle');
 const CatalogInner = document.querySelector('.header__catalog__dropdown')
 const CatalogMore = document.querySelector('.header__catalog__content');
 const items = document.querySelectorAll('.header__catalog__item');
-const panels = document.querySelectorAll('.header__catalog__panel');
+const groups = document.querySelectorAll('.header__catalog__dropdown .dropdown_group');
 // Открытие каталога
 CatalogBurger.addEventListener('click', () => {
   CatalogBurger.classList.toggle('active');
@@ -190,14 +190,49 @@ document.addEventListener("click", (e) =>{
   }
 });
 
+// Пункт левого списка <li id="[[+id]]"> ищет свой блок <div class="dropdown_group" data-parent-id="[[+id]]">
+const getGroup = (item) => {
+  const id = item.id || item.dataset.category;
+  if (!id) return null;
+  return document.querySelector(`.header__catalog__dropdown .dropdown_group[data-parent-id="${CSS.escape(id)}"]`);
+};
+
+const showGroup = (group) => {
+  group.style.display = 'block';
+  group.classList.add('active');
+  const panel = group.querySelector('.header__catalog__panel');
+  if (panel) panel.classList.add('active');
+};
+
+const hideGroup = (group) => {
+  group.style.display = 'none';
+  group.classList.remove('active');
+  const panel = group.querySelector('.header__catalog__panel');
+  if (panel) panel.classList.remove('active');
+};
+
+const resetGroups = () => {
+  groups.forEach(group => {
+    if (group.parentElement !== CatalogMore) {
+      CatalogMore.append(group);
+    }
+    hideGroup(group);
+  });
+  items.forEach(el => {
+    el.classList.remove("active");
+    el.classList.remove("hidden");
+  });
+  CatalogMore.classList.remove("active");
+};
+
 function openMobile(item) {
+  const group = getGroup(item);
+  if (!group) return;
   syncScrollLock();
-  const id = item.dataset.category;
-  const panel = document.getElementById(id);
   if (item.classList.contains("active")) {
       item.classList.remove("active");
-      panel.classList.remove("active");
-      CatalogMore.append(panel);
+      hideGroup(group);
+      CatalogMore.append(group);
       items.forEach(el => {
           el.classList.remove("hidden");
       });
@@ -207,12 +242,12 @@ function openMobile(item) {
       el.classList.remove("active");
       el.classList.remove("hidden");
   });
-  panels.forEach(el => {
-      el.classList.remove("active");
+  groups.forEach(el => {
+      hideGroup(el);
   });
   item.classList.add("active");
-  panel.classList.add("active");
-  item.after(panel);
+  showGroup(group);
+  item.after(group);
   items.forEach(el => {
       if (el !== item) {
           el.classList.add("hidden");
@@ -222,14 +257,22 @@ function openMobile(item) {
 }
 
 function openDesktop(item) {
-  const id = item.dataset.category;
-  const panel = document.getElementById(id);
+  const group = getGroup(item);
+  if (!group) return;
   items.forEach(el => el.classList.remove("active"));
-  panels.forEach(el => el.classList.remove("active"));
+  groups.forEach(el => hideGroup(el));
   item.classList.add("active");
   CatalogMore.classList.add("active");
-  panel.classList.add("active");
+  showGroup(group);
 }
+
+let isDesktop = window.innerWidth > 992;
+window.addEventListener('resize', () => {
+  const nextIsDesktop = window.innerWidth > 992;
+  if (nextIsDesktop === isDesktop) return;
+  isDesktop = nextIsDesktop;
+  resetGroups();
+});
 
 items.forEach(item => {
   item.addEventListener("mouseenter", () => {

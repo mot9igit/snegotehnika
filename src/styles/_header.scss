@@ -337,6 +337,7 @@ header {
   }
 }
 
+
 .header__catalog__sidebar{
   position: static;
   display: flex;
@@ -385,6 +386,10 @@ header {
     display: flex;
   }
 
+  .header__catalog__menu__icon{
+    transition: all .2s ease;
+  }
+
   &.active{
     background-color: #F4F7FF;
 
@@ -394,11 +399,11 @@ header {
 
     .header__catalog__name{
       color: var(--secondary-color);
-      transition: all .2s;
+      transition: all .2s ease;
     }
 
     .header__catalog__menu__icon{
-      transition: all .2s;
+      transition: all .2s ease;
       transform: rotate(-90deg);
     }
   }
@@ -677,6 +682,9 @@ header {
       .header__catalog__menu__icon{
         transform: rotate(0deg);
       }
+    }
+    &.hidden{
+      display: none;
     }
   }
   .header__menu__sidebar{
