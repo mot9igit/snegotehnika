@@ -288,20 +288,26 @@ items.forEach(item => {
   const group = getGroup(item);
   if (!group) return;
 
+  const hasChildren = !!group.querySelector('.header__catalog__content__inner');
+
   item.addEventListener("mouseenter", () => {
-    if (window.innerWidth > 992) {
+    if (window.innerWidth <= 992) return;
+    if (hasChildren) {
       openDesktop(item);
+    } else {
+      items.forEach(el => el.classList.remove("active"));
+      groups.forEach(el => hideGroup(el));
+      if (CatalogMore) CatalogMore.classList.remove("active");
     }
   });
 
+  if (!hasChildren) return;
+
   item.addEventListener("click", (e) => {
+    if (window.innerWidth > 992) return;
     e.preventDefault();
     e.stopPropagation();
-    if (window.innerWidth > 992) {
-      openDesktop(item);
-    } else {
-      openMobile(item);
-    }
+    openMobile(item);
   });
 })
 
