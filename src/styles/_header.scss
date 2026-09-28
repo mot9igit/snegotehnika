@@ -716,6 +716,9 @@ header {
     border: 0px;
     border-radius: 0px;
     border-bottom: 1px #ffffff61 dashed;
+    .carticon{
+      display: flex;
+    }
     img{
       width: 26px;
       height: 26px;
