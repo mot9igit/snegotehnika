@@ -89,3 +89,10 @@ button:hover,
 button:focus {
   border: 0px;
 }
+
+a:focus,
+a:active,
+button:focus,
+button:active {
+  outline: none;
+}
