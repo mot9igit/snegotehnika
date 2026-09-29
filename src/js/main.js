@@ -175,7 +175,12 @@ const CatalogBurger = document.querySelector('.header__catalog__toggle');
 const CatalogInner = document.querySelector('.header__catalog__dropdown')
 const CatalogMore = document.querySelector('.header__catalog__content');
 const items = document.querySelectorAll('.header__catalog__item');
-const groups = document.querySelectorAll('.header__catalog__dropdown .dropdown_group');
+// MODX: dropdown_group[data-parent-id] > panel; статика: panel[id]
+const groups = (() => {
+  const wrappers = document.querySelectorAll('.header__catalog__dropdown .dropdown_group');
+  if (wrappers.length) return wrappers;
+  return document.querySelectorAll('.header__catalog__dropdown .header__catalog__panel');
+})();
 // Открытие каталога
 if (CatalogBurger && CatalogInner) {
   CatalogBurger.addEventListener('click', () => {
@@ -200,25 +205,28 @@ document.addEventListener("click", (e) =>{
   }
 });
 
-// Пункт левого списка <li id="[[+id]]"> ищет свой блок <div class="dropdown_group" data-parent-id="[[+id]]">
+// Пункт левого списка <li data-id="[[+id]]"> ищет свой блок <div class="dropdown_group" data-parent-id="[[+id]]"> (MODX)
+// или панель <ul class="header__catalog__panel" id="..."> (статика)
 const getGroup = (item) => {
   const id = item.id || item.dataset.id || item.dataset.category;
   if (!id) return null;
-  return document.querySelector(`.header__catalog__dropdown .dropdown_group[data-parent-id="${CSS.escape(id)}"]`);
+  const wrapper = document.querySelector(`.header__catalog__dropdown .dropdown_group[data-parent-id="${CSS.escape(id)}"]`);
+  if (wrapper) return wrapper;
+  return document.getElementById(id);
 };
 
+const getPanel = (group) => group.classList.contains('header__catalog__panel') ? group : group.querySelector('.header__catalog__panel');
+
 const showGroup = (group) => {
-  group.style.display = 'block';
-  group.classList.add('active');
-  const panel = group.querySelector('.header__catalog__panel');
+  const panel = getPanel(group);
   if (panel) panel.classList.add('active');
+  if (panel !== group) group.style.display = 'block';
 };
 
 const hideGroup = (group) => {
-  group.style.display = 'none';
-  group.classList.remove('active');
-  const panel = group.querySelector('.header__catalog__panel');
+  const panel = getPanel(group);
   if (panel) panel.classList.remove('active');
+  if (panel !== group) group.style.display = 'none';
 };
 
 const resetGroups = () => {
