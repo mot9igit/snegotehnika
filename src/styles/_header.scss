@@ -63,6 +63,7 @@ header a:active {
   font-weight: 700;
   color: #E2EAF9;
   text-decoration: none;
+  transition: all .2s;
 
   &:hover{
     background-color: white;
@@ -458,6 +459,7 @@ header a:active {
   line-height: 120%;
   color: var(--primary-color);
   font-family: "Roboto", sans-serif;
+  transition: all .2s ease;
 }
 
 .header__catalog__menu{

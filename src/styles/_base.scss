@@ -1739,10 +1739,12 @@ h1, h2, h3{
                   color: var(--primary-color);
                   font-family: "Oswald", sans-serif;
                   text-transform: uppercase;
+                  transition: all .2s;
                   svg{
                     flex-shrink: 0;
                     margin-left: 20px;
                     color: var(--secondary-color);
+                    transition: all .2s;
                   }
                   &:hover{
                     transition: all .2s;
@@ -5119,6 +5121,7 @@ h1, h2, h3{
         text-transform: none;
         border-bottom: 1px #9FC0FF solid;
         background-color: #F4F7FF;
+        transition: all .2s ease;
         label{
           display: block;
           cursor: pointer;
