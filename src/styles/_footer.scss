@@ -223,7 +223,9 @@ footer {
   .footer__reviews__btn{
     margin-top: 15px;
     padding: 18px 30px;
-    display: flex;
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
     align-items: center;
     justify-content: space-between;
     font-size: 14px;
@@ -301,6 +303,8 @@ footer {
   }
 
   .footer__logo__link{
+    display: block;
+    max-width: 210px;
     line-height: 0;
   }
 
@@ -310,7 +314,9 @@ footer {
   }
 
   .footer__logo__desktop{
-    max-width: 210px;
+    display: block;
+    width: 100%;
+    height: auto !important;
   }
 
   @media (max-width: $desktop) {
@@ -339,8 +345,13 @@ footer {
     .footer__logo__link__mobile{
       display: block;
       margin-bottom: 40px;
-      width: auto;
       max-width: 220px;
+    }
+
+    .footer__logo__mobile{
+      display: block;
+      width: 100%;
+      height: auto !important;
     }
 
     .footer__scroll__top{
