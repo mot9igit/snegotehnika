@@ -1,4 +1,4 @@
-﻿import Swiper from 'swiper';
+import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay, Scrollbar } from 'swiper/modules';
 
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
@@ -7,6 +7,20 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 import 'swiper/css';
 
 import { addToCart, removeFromCart, setQty, clearCart, getCart, updateCartCount } from './cart';
+
+// Плагин jquery.matchHeight в шаблонах MODX не подключён — вызовы падают с TypeError.
+// Заглушка равносильна текущему поведению (высоты считает CSS Grid), но без ошибки в консоли.
+if (window.jQuery && !window.jQuery.fn.matchHeight) {
+  window.jQuery.fn.matchHeight = function () {
+    return this;
+  };
+}
+
+// Защита от ошибки msOptionsPrice: msal.calculatePrice может быть не объявлен
+window.msal = window.msal || {};
+if (typeof window.msal.calculatePrice !== 'function') {
+  window.msal.calculatePrice = function () {};
+}
 
 Fancybox.bind("[data-fancybox]", {
   dragToClose: false,
@@ -70,7 +84,15 @@ document.querySelectorAll(".model__choice__dropdown").forEach((dropdown) => {
     const text = dropdown.querySelector(".model__choice__btn__text");
     if (text) text.textContent = item.textContent;
     const radio = item.querySelector('input[type="radio"]');
-    if (radio) radio.checked = true;
+    if (radio) {
+      radio.checked = true;
+      // Тред выбранного товара: question-{id} / review-{id} — префикс берём из текущего значения
+      const thread = dropdown.closest("form")?.querySelector('input[name="thread"]');
+      if (thread && radio.dataset.id) {
+        const prefix = thread.value.split("-")[0];
+        thread.value = prefix + "-" + radio.dataset.id;
+      }
+    }
     list.querySelectorAll(".model__choice__item").forEach((el) => {
       el.classList.toggle("active", el === item);
     });
@@ -172,16 +194,11 @@ document.addEventListener('click', (e) => {
 
 // Catalog
 const CatalogBurger = document.querySelector('.header__catalog__toggle');
-const CatalogInner = document.querySelector('.header__catalog__dropdown')
-const CatalogMore = document.querySelector('.header__catalog__content');
-const items = document.querySelectorAll('.header__catalog__item');
-// MODX: dropdown_group[data-parent-id] > panel; статика: panel[id]
-const groups = (() => {
-  const wrappers = document.querySelectorAll('.header__catalog__dropdown .dropdown_group');
-  if (wrappers.length) return wrappers;
-  return document.querySelectorAll('.header__catalog__dropdown .header__catalog__panel');
-})();
-// Открытие каталога
+const CatalogInner = document.querySelector('.header__catalog__dropdown');
+const catalogItems = document.querySelectorAll('.header__catalog__item');
+
+// Desktop: панель детей открывается через CSS (:hover / :focus-within) внутри <li>.
+// Mobile: панель открывается по клику — обычный аккордион.
 if (CatalogBurger && CatalogInner) {
   CatalogBurger.addEventListener('click', () => {
     CatalogBurger.classList.toggle('active');
@@ -192,7 +209,19 @@ if (CatalogBurger && CatalogInner) {
     syncScrollLock();
   });
 }
-// Закрытие каталога при нажатии вне каталога
+
+// Курсор ушёл за пределы выпадающего каталога — закрываем (только desktop,
+// на мобильном закрытие по касанию не нужно)
+if (CatalogInner) {
+  CatalogInner.addEventListener('mouseleave', () => {
+    if (window.innerWidth < 992) return;
+    CatalogBurger?.classList.remove('active');
+    CatalogInner.classList.remove('active');
+    closeCatalogItems();
+    syncScrollLock();
+  });
+}
+
 document.addEventListener("click", (e) =>{
   if (!CatalogBurger || !CatalogInner) return;
   if (
@@ -205,119 +234,32 @@ document.addEventListener("click", (e) =>{
   }
 });
 
-// Пункт левого списка <li data-id="[[+id]]"> ищет свой блок <div class="dropdown_group" data-parent-id="[[+id]]"> (MODX)
-// или панель <ul class="header__catalog__panel" id="..."> (статика)
-const getGroup = (item) => {
-  const id = item.id || item.dataset.id || item.dataset.category;
-  if (!id) return null;
-  const wrapper = document.querySelector(`.header__catalog__dropdown .dropdown_group[data-parent-id="${CSS.escape(id)}"]`);
-  if (wrapper) return wrapper;
-  return document.getElementById(id);
+const closeCatalogItems = (except) => {
+  catalogItems.forEach((el) => {
+    if (el !== except) el.classList.remove('active');
+  });
 };
 
-const getPanel = (group) => group.classList.contains('header__catalog__panel') ? group : group.querySelector('.header__catalog__panel');
+catalogItems.forEach((item) => {
+  const panel = item.querySelector(':scope > .header__catalog__panel');
+  if (!panel) return;
+  const btn = item.querySelector('.header__catalog__item__btn');
+  if (!btn) return;
 
-const showGroup = (group) => {
-  const panel = getPanel(group);
-  if (panel) panel.classList.add('active');
-  if (panel !== group) group.style.display = 'block';
-};
-
-const hideGroup = (group) => {
-  const panel = getPanel(group);
-  if (panel) panel.classList.remove('active');
-  if (panel !== group) group.style.display = 'none';
-};
-
-const resetGroups = () => {
-  groups.forEach(group => {
-    if (CatalogMore && group.parentElement !== CatalogMore) {
-      CatalogMore.append(group);
-    }
-    hideGroup(group);
+  btn.addEventListener('click', (e) => {
+    if (window.innerWidth >= 992) return;
+    e.preventDefault();
+    const isOpen = item.classList.contains('active');
+    closeCatalogItems(item);
+    item.classList.toggle('active', !isOpen);
   });
-  items.forEach(el => {
-    el.classList.remove("active");
-    el.classList.remove("hidden");
-  });
-  if (CatalogMore) CatalogMore.classList.remove("active");
-};
-
-function openMobile(item) {
-  const group = getGroup(item);
-  if (!group) return;
-  syncScrollLock();
-  if (item.classList.contains("active")) {
-      item.classList.remove("active");
-      hideGroup(group);
-      CatalogMore?.append(group);
-      items.forEach(el => {
-          el.classList.remove("hidden");
-      });
-      return;
-  }
-  items.forEach(el => {
-      el.classList.remove("active");
-      el.classList.remove("hidden");
-  });
-  groups.forEach(el => {
-      hideGroup(el);
-  });
-  item.classList.add("active");
-  showGroup(group);
-  item.after(group);
-  items.forEach(el => {
-      if (el !== item) {
-          el.classList.add("hidden");
-      }
-  });
-
-}
-
-function openDesktop(item) {
-  const group = getGroup(item);
-  if (!group) return;
-  items.forEach(el => el.classList.remove("active"));
-  groups.forEach(el => hideGroup(el));
-  item.classList.add("active");
-  CatalogMore.classList.add("active");
-  showGroup(group);
-}
-
-let isDesktop = window.innerWidth > 992;
-window.addEventListener('resize', () => {
-  const nextIsDesktop = window.innerWidth > 992;
-  if (nextIsDesktop === isDesktop) return;
-  isDesktop = nextIsDesktop;
-  resetGroups();
 });
 
-items.forEach(item => {
-  const group = getGroup(item);
-  if (!group) return;
-
-  const hasChildren = !!group.querySelector('.header__catalog__content__inner');
-
-  item.addEventListener("mouseenter", () => {
-    if (window.innerWidth <= 992) return;
-    if (hasChildren) {
-      openDesktop(item);
-    } else {
-      items.forEach(el => el.classList.remove("active"));
-      groups.forEach(el => hideGroup(el));
-      if (CatalogMore) CatalogMore.classList.remove("active");
-    }
-  });
-
-  if (!hasChildren) return;
-
-  item.addEventListener("click", (e) => {
-    if (window.innerWidth > 992) return;
-    e.preventDefault();
-    e.stopPropagation();
-    openMobile(item);
-  });
-})
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 992) {
+    closeCatalogItems();
+  }
+});
 
 // Offers__swiper
 const dartContainerRef =
@@ -488,20 +430,22 @@ wholesaleBtns.forEach((btn) => {
 
 // Product-card__set__list
 
-document.querySelectorAll('.product-card__set__list__item__icon__container').forEach((btn, index) => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.product-card__set__list__item');
-    if (!item) return;
-    item.classList.add('active');
-    const name = item.querySelector('.product-card__set__list__item__name')?.textContent.trim();
-    const price = parseInt((item.querySelector('.product-card__set__list__item__price')?.textContent || '').replace(/[^0-9]/g, ''), 10) || 0;
-    const img = item.querySelector('.product-card__set__list__item__img img')?.getAttribute('src') || '';
-    addToCart({
-      id: `set-item-${index}`,
-      name,
-      price,
-      img,
+// блок комплектации: кнопка «плюс» переключает чекбокс msAddLinked и пересчитывает цену
+document.querySelectorAll('.product-card__set__list__item').forEach((item) => {
+  const btn = item.querySelector('.product-card__set__list__item__icon__container');
+  const checkbox = item.querySelector('.msal_input');
+  if (!btn) return;
+  if (checkbox) {
+    checkbox.addEventListener('change', () => {
+      item.classList.toggle('active', checkbox.checked);
+      if (window.msal && typeof window.msal.calculatePrice === 'function') {
+        window.msal.calculatePrice();
+      }
     });
+    return;
+  }
+  btn.addEventListener('click', () => {
+    item.classList.toggle('active');
   });
 });
 
@@ -638,7 +582,19 @@ const escapeVideoInfoHtml = (value) =>
 
 document.querySelectorAll('[data-modal-open="modal-video-info"]').forEach((btn) => {
   btn.addEventListener('click', () => {
-    const data = videoInfoContent[btn.dataset.videoInfo];
+    // Данные модалки: атрибуты с сервера (реальные тексты из TV), иначе — статичная карта
+    let data = null;
+    if (btn.dataset.modalVideoTitle) {
+      let pros = [];
+      try {
+        pros = JSON.parse(btn.dataset.modalVideoPros || '[]');
+      } catch (e) {
+        pros = [];
+      }
+      data = { title: btn.dataset.modalVideoTitle, pros };
+    } else {
+      data = videoInfoContent[btn.dataset.videoInfo];
+    }
     if (!data || !videoInfoModal) return;
     videoInfoTitle.textContent = data.title;
     videoInfoPros.innerHTML = data.pros.map((pro) => `<li>${escapeVideoInfoHtml(pro)}</li>`).join('');
@@ -709,6 +665,9 @@ videoBlocks.forEach((block) => {
   const playButton = block.querySelector('.video__play');
   const isFancybox = block.hasAttribute('data-fancybox');
 
+  // фото-слайды без кнопки play — обработчики не нужны
+  if (!video || !playButton) return;
+
   playButton.addEventListener('click', (event) => {
     if (isFancybox) return;
     event.stopPropagation();
@@ -747,7 +706,12 @@ catalogSortTrigger?.addEventListener('click', (e) => {
 // Выбор сортировки
 catalogSortItems.forEach((item) => {
   item.addEventListener('click', (e) => {
+    // На MODX пункты сортировки — ссылки: клик должен дойти до document,
+    // где висит делегированный обработчик mFilter2 (AJAX-сортировка)
+    if (item.tagName === 'A') return;
+
     e.stopPropagation();
+
     const isActive = item.classList.contains('active');
     const hasArrow = item.classList.contains('catalog__sorting__item--choice');
 
@@ -787,6 +751,8 @@ if (accordion && accordionItems.length > 0) {
 // product-card__questions / reviews expand-collapse
 const facAnswers = document.querySelectorAll('.product-card__fac__answer, .product-card__reviews__item');
 facAnswers.forEach(answer => {
+  // у скрытых вопросов (hidden-список) размеры равны нулю — проверку вернём при раскрытии
+  if (answer.closest('[hidden]')) return;
   const text = answer.querySelector('.product-card__fac__answer__container p, .product-card__reviews__item > p');
   const expand = answer.querySelector('.faq__expand:not(.faq__expand--collapse)');
   if (text && expand && text.scrollHeight <= text.clientHeight) {
@@ -805,6 +771,31 @@ collapseButtons.forEach(button =>{
   button.addEventListener('click', () => {
     const item = button.closest('.product-card__fac__answer, .product-card__reviews__item');
     item.classList.remove('active');
+  });
+});
+
+// product-card__fac «показать больше» — раскрывает вопросы после первых трёх
+document.querySelectorAll('[data-faq-show-more]').forEach((button) => {
+  const rest = button.closest('.product-card__questions, .product-card__reviews')?.querySelector('[data-faq-rest]');
+  if (!rest) {
+    // скрывать нечего — прячем кнопку
+    button.style.display = 'none';
+    return;
+  }
+  button.addEventListener('click', () => {
+    rest.removeAttribute('hidden');
+    // у раскрытых ответов пересчитать кнопку «подробнее»
+    rest.querySelectorAll('.product-card__fac__answer').forEach((answer) => {
+      const text = answer.querySelector('.product-card__fac__answer__container p');
+      const expand = answer.querySelector('.faq__expand:not(.faq__expand--collapse)');
+      if (text && expand) {
+        expand.style.display = '';
+        if (text.scrollHeight <= text.clientHeight) {
+          expand.style.display = 'none';
+        }
+      }
+    });
+    button.style.display = 'none';
   });
 });
 
@@ -1028,6 +1019,19 @@ initTabsNav('.product-card__tabs__nav', '.product-card__tabs__nav__item', 'produ
 initTabsNav('.delivery__tabs__nav', '.delivery__tabs__nav__item', 'delivery__tabs__nav--open');
 initTabsNav('.wholesale__photo-gallery__tabs__nav', '.wholesale__photo-gallery__tabs__nav__item', 'wholesale__photo-gallery__tabs__nav--open');
 initTabsNav('.contacts__tabs__nav', '.contacts__tabs__nav__item', 'contacts__tabs__nav--open');
+
+// переход к вкладке по ссылке вида [data-tab-link="specifications"]
+document.querySelectorAll('[data-tab-link]').forEach((link) => {
+  link.addEventListener('click', (event) => {
+    const key = link.getAttribute('data-tab-link');
+    const target = document.querySelector(`.product-card__tabs__nav__item[data-tab="${key}"]`);
+    if (!target) return;
+    event.preventDefault();
+    target.click();
+    const panel = document.querySelector(`[data-tab__content="${key}"]`);
+    if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 
 // авто-высота textarea (растёт при вводе)
 const autoResizeTextareas = (root) => {

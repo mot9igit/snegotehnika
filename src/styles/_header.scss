@@ -353,23 +353,8 @@ header a:active {
   width:300px;
   border-radius: 10px;
   background-color: #fff;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: -1px 9px 23.8px #3F71FF42;
-}
-
-.header__catalog__content{
-  margin-left: 15px;
-  position: static;
-  display:none;
-  width:300px;
-  border-radius: 10px;
-  background-color: #fff;
-  overflow: hidden;
-  box-shadow: -1px 9px 23.8px #3F71FF42;
-
-  &.active{
-    display: block;
-  }
 }
 
 .header__catalog__list{
@@ -379,15 +364,37 @@ header a:active {
   list-style: none;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
 }
 
 .header__catalog__item{
+  position: relative;
   padding: 6px 10px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px #DEE9FF solid;
+
+  &:first-child{
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  // Дети не должны наследовать лишние скругления родителя
+  &.has-children,
+  &.active{
+    border-radius: 0px;
+  }
+
+  // Родитель без иконки — скрываем пустой логотип
+  &[data-icon=""] .header__catalog__logo{
+    display: none;
+  }
+
+  // Стрелка только у родителей, у которых есть дети
+  &:not(:has(.header__catalog__panel)) .header__catalog__icon{
+    display: none;
+  }
 
   .header__catalog__icon{
     display: flex;
@@ -430,8 +437,14 @@ header a:active {
 
   &:last-child{
     border-bottom: 0px;
+    border-radius: 0px 0px 10px 10px;
   }
-}
+
+  // В открытом аккордионе на мобильном последний айтем может быть родителем
+  // с панелью — не закругляем его, чтобы панель выглядела слитно
+  &.active:last-child{
+    border-radius: 0px;
+  }}
 
 .header__catalog__item__btn{
   width: 100%;
@@ -469,9 +482,46 @@ header a:active {
 
 .header__catalog__panel{
   display: none;
+  position: absolute;
+  top: 0;
+  left: calc(100% + 15px);
+  z-index: 3;
+  width: 300px;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: -6px 9px 23.8px #3F71FF42;
+
+  // невидимый мостик над отступом: курсор переходит с родителя на панель
+  // через отступ и панель не закрывается
+  &::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 15px;
+    height: 100%;
+  }
 
   &.active{
     display: block;
+  }
+}
+
+// На desktop панель открывается наведением на родителя.
+// На mobile (см. медиазапрос ниже) панель открывается только по клику — через .active,
+// поэтому :hover/:focus-within здесь должны быть отключены, иначе после тапа
+// панель останется висеть без активного пункта.
+@media (min-width: 992px){
+  .header__catalog__item:hover > .header__catalog__panel,
+  .header__catalog__item:focus-within > .header__catalog__panel{
+    display: block;
+  }
+
+  // Стрелка поворачивается на 90° вместе с панелью: на desktop панель
+  // открывается наведением, а .active сюда не добавляется
+  .header__catalog__item:hover .header__catalog__menu__icon,
+  .header__catalog__item:focus-within .header__catalog__menu__icon{
+    transform: rotate(-90deg);
   }
 }
 
@@ -697,7 +747,45 @@ header a:active {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
+  .header__catalog__list{
+    // иначе айтемы сжимаются по контенту и бордер снизу
+    // обрывается раньше правого края
+    align-items: stretch;
+  }
   .header__catalog__item{
+    // айтем всегда во всю ширину колонки
+    width: 100%;
+    align-self: stretch;
+
+    // панель детей — flex-элемент, поэтому нужен перенос,
+    // иначе она встаёт справа от родителя, а не под ним
+    flex-wrap: wrap;
+
+    // отступ родителя переносим на строку с названием: сам <li> без
+    // padding и margin, поэтому панель детей идёт вплотную к краям,
+    // а голубой фон родителя не отступает от краёв
+    padding: 0px;
+    margin: 0px;
+
+    // голубой фон живёт только на строке родителя, <li> всегда прозрачный
+    &.active,
+    &:hover:not(.active){
+      background-color: transparent;
+
+      .header__catalog__item__btn{
+        background-color: #F4F7FF;
+      }
+    }
+
+    // строка родителя растягивается на всю ширину, поэтому её фон
+    // (голубой при выборе) идёт от левого до правого края без отступов
+    .header__catalog__item__btn{
+      display: flex;
+      width: 100%;
+      align-self: stretch;
+      padding: 6px 10px;
+    }
+
     .header__catalog__menu__icon{
       transform: rotate(180deg);
     }
@@ -709,6 +797,30 @@ header a:active {
     &.hidden{
       display: none;
     }
+  }
+  .header__catalog__panel{
+    position: static;
+    flex-basis: 100%;
+    width: auto;
+    background-color: #fff;
+    border-radius: 0px;
+    box-shadow: none;
+
+    &::before{
+      display: none;
+    }
+
+    // показываем только у активного родителя
+    &.active{
+      display: block;
+    }
+  }
+  // мобильный аккордион: панель открыта только у нажатого родителя
+  .header__catalog__item.active > .header__catalog__panel{
+    display: block;
+  }
+  .header__catalog__list:has(> .header__catalog__item.active) > .header__catalog__item:not(.active){
+    display: none;
   }
   .header__menu__sidebar{
     height: calc(100vh - 100px);
@@ -725,11 +837,6 @@ header a:active {
   }
   .header__menu__sidebar{
     top: 100px;
-  }
-  .header__catalog__content{
-    &.active{
-      display: none;
-    }
   }
   .navigation{
     display: none;

@@ -120,6 +120,9 @@ h1, h2, h3{
 
   .swiper-button-prev,
   .swiper-button-next {
+    position: static;
+    width: auto;
+    height: auto;
     margin: 5px;
     display: block;
     background-color: transparent;
@@ -127,6 +130,11 @@ h1, h2, h3{
     cursor: pointer;
     border: 2px var(--secondary-color) solid;
     border-radius: 6px;
+
+    &::after {
+      content: none;
+      display: none;
+    }
 
     svg {
       display: block;
@@ -653,7 +661,7 @@ h1, h2, h3{
   .dealer__inner{
     border-radius: 15px;
     padding: 90px 690px 90px 98px;
-    background-image: url(/img/dealer/dealer_backgroung.png);
+    background-image: url(/assets/templates/snegotehnika/img/dealer/dealer_backgroung.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -989,6 +997,12 @@ h1, h2, h3{
             transform: rotate(180deg);
           }
         }
+        &[data-dir="asc"] span:after,
+        &[data-dir="desc"] span:after{
+          content: "\2193";
+          font-size: 16px;
+          padding-left: 5px;
+        }
       }
     }
   }
@@ -997,6 +1011,12 @@ h1, h2, h3{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
+    > #mse2_results{
+      display: contents;
+    }
+    > .text-center{
+      grid-column: 1 / -1;
+    }
     .catalog__item{
       background-color: #fff;
       border-radius: 10px;
@@ -1163,7 +1183,7 @@ h1, h2, h3{
         overflow: hidden;
         flex-direction: row;
         align-items: center;
-        background-image: url(/img/catalog/advertisement.png);
+        background-image: url(/assets/templates/snegotehnika/img/catalog/advertisement.png);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -1216,7 +1236,14 @@ h1, h2, h3{
               width: 100%;
             }
             input[type="checkbox"]{
-              display: none;
+              position: absolute;
+              width: 1px;
+              height: 1px;
+              margin: 0;
+              padding: 0;
+              border: 0;
+              opacity: 0;
+              pointer-events: none;
             }
             .catalog__advertisement__approval{
               display: flex;
@@ -1243,6 +1270,11 @@ h1, h2, h3{
                 border: 1px var(--secondary-color) solid;
                 border-radius: 50%;
                 background-color: transparent;
+              }
+            }
+            .catalog__advertisement__approval:focus-within{
+              .check-circle{
+                box-shadow: 0 0 0 2px var(--secondary-color);
               }
             }
             input[type="checkbox"]:checked + .catalog__advertisement__approval .check-circle {
@@ -1421,18 +1453,28 @@ h1, h2, h3{
       align-items: center;
       .product-card__intro__top__container{
         display: flex;
+        align-items: stretch;
         .product-card__intro__top__manufacturer{
           padding: 0px 30px;
           display: flex;
           font-size: 14px;
+          font-weight: 500;
           color: var(--primary-color);
           height: auto;
           align-items: center;
+          flex-shrink: 0;
+          white-space: nowrap;
+          width: max-content;
           background-color: #E2EAF9;
           border-radius: 6px;
           img{
             margin-left: 10px;
+            width: 126px;
             max-width: 126px;
+            max-height: 36px;
+            height: auto;
+            object-fit: contain;
+            flex-shrink: 0;
           }
         }
         .product-card__intro__top__product-code{
@@ -1451,6 +1493,14 @@ h1, h2, h3{
           font-size: 14px;
           font-weight: 500;
           color: #fff;
+          .available{
+            margin: 0;
+          }
+          .available_label{
+            padding: 0;
+            background-color: transparent;
+            color: inherit;
+          }
         }
         .yandex-rating{
           margin-left: 60px;
@@ -1480,9 +1530,15 @@ h1, h2, h3{
     }
     .swiper__images__intro{
       margin-bottom: 60px;
+      overflow: hidden;
       .swiper-wrapper{
         .swiper-slide{
+          a{
+            display: block;
+          }
           img{
+            width: 100%;
+            height: auto;
             display: block;
             overflow: hidden;
             border-radius: 15px;
@@ -2127,6 +2183,7 @@ h1, h2, h3{
               display: flex;
               align-items: center;
               padding: 10px;
+              cursor: pointer;
               p{
                 max-width: 60px;
                 font-size: 12px;
@@ -2400,6 +2457,8 @@ h1, h2, h3{
           align-content: start;
 
         .product-card__set__list__item{
+          display: flex;
+          flex-direction: column;
           background-color: #F4F7FF;
           border-radius: 10px;
           overflow: hidden;
@@ -2411,9 +2470,13 @@ h1, h2, h3{
             }
           }
           .product-card__set__list__item__inner{
+            display: flex;
+            flex-direction: column;
+            flex: 1;
             padding: 15px 18px;
             .product-card__set__list__item__name{
-              margin-bottom: 25px;
+              margin-top: auto;
+              margin-bottom: 30px;
               font-size: 14px;
               font-weight: 600;
               color: var(--primary-color);
@@ -4774,7 +4837,7 @@ h1, h2, h3{
     margin-bottom: 90px;
     padding: 210px 0;
     position: relative;
-    background-image: url(/img/new-blocks/block__button__v2.png) ;
+    background-image: url(/assets/templates/snegotehnika/img/new-blocks/block__button__v2.png) ;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -12391,5 +12454,127 @@ body.modal-open{
         padding: 35px 15px;
       }
     }
+  }
+}
+// ===== VK Clips во вкладке «Видео обзоры»: слайды в старой разметке (item/image/text) =====
+.swiper__product-card__videoReviews {
+  .swiper-wrapper {
+    .swiper-slide.item {
+      width: 280px;
+      .image {
+        margin-bottom: 22px;
+        border-radius: 15px;
+        overflow: hidden;
+        a {
+          display: block;
+        }
+        img {
+          display: block;
+          width: 100%;
+          height: auto;
+        }
+      }
+      .text {
+        a {
+          font-size: 20px;
+          font-weight: 500;
+          color: var(--secondary-color);
+          text-decoration: none;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+// ===== Вкладка «Оплата и доставка»: правый столбец — сырой HTML из конфига (conf_delieveryinfo):
+// списки <ul><li> + промежуточные <h4>. Приводим к виду макета (пункты с плюсом). =====
+.product-card__delivery .product-card__delivery__content .product-card__delivery__content__right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li {
+      position: relative;
+      padding-left: 34px;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--primary-color);
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 24px;
+        height: 24px;
+        background-color: var(--secondary-color);
+        -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM10 17.414L5.293 12.707L6.707 11.293L10 14.586L17.293 7.293L18.707 8.707L10 17.414Z"/></svg>') center / contain no-repeat;
+        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12C2 17.523 6.477 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2ZM10 17.414L5.293 12.707L6.707 11.293L10 14.586L17.293 7.293L18.707 8.707L10 17.414Z"/></svg>') center / contain no-repeat;
+      }
+      & + li {
+        margin-top: 20px;
+      }
+    }
+    + h4 {
+      margin-top: 30px;
+    }
+    + ul {
+      margin-top: 20px;
+    }
+  }
+  h4 {
+    display: none;
+  }
+  /* В конфиге два списка (оплата и доставка) — оставляем только первый (оплата) */
+  ul:nth-of-type(2) {
+    display: none;
+  }
+}
+
+/* Размер текста голых <li> конфига — по брейкпоинтам, +2px ко всем значениям макета.
+   В макете текст сидит в <li><p>, а конфиг отдаёт голый <li>text</li>, поэтому
+   вложенные правила `li p` на него не действуют. */
+@media (max-width: $desktop) {
+  .product-card__delivery .product-card__delivery__content .product-card__delivery__content__right ul li {
+    font-size: 16px;
+  }
+}
+@media (max-width: $small-desktop) {
+  .product-card__delivery .product-card__delivery__content .product-card__delivery__content__right ul li {
+    font-size: 14px;
+    &::before {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+@media (max-width: $tablets) {
+  .product-card__delivery .product-card__delivery__content .product-card__delivery__content__right ul li {
+    font-size: 20px;
+  }
+}
+@media (max-width: $small-tablets) {
+  .product-card__delivery .product-card__delivery__content .product-card__delivery__content__right ul li {
+    font-size: 16px;
+    &::before {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+@media (max-width: $big-phones) {
+  .product-card__delivery .product-card__delivery__content .product-card__delivery__content__right ul li {
+    font-size: 18px;
+  }
+}
+@media (max-width: $phones) {
+  .product-card__delivery .product-card__delivery__content .product-card__delivery__content__right ul li {
+    font-size: 16px;
   }
 }
