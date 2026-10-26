@@ -1351,17 +1351,22 @@ h1, h2, h3{
     justify-content: center;
     .catalog__more__link{
       display: flex;
+      flex-direction: column;
       align-items: center;
+      gap: 12px;
       font-size: 14px;
       font-weight: 600;
       text-transform: uppercase;
       color: var(--secondary-color);
       svg{
-        margin-left: 15px;
         width: 24px;
         height: 24px;
         color: var(--secondary-color);
-        transform: rotate(45deg);
+        transform: rotate(135deg);
+        transition: transform .2s ease;
+      }
+      &:hover svg{
+        transform: rotate(135deg) translateY(4px);
       }
     }
   }
