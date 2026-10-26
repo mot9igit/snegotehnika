@@ -1351,7 +1351,7 @@ h1, h2, h3{
     justify-content: center;
     .catalog__more__link{
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       gap: 20px;
       font-size: 14px;
@@ -1372,7 +1372,7 @@ h1, h2, h3{
   // Кнопка «Загрузить еще» из !filter (Вездеходы/Сани) — делаем как .catalog__more
   .btn.btn-blue.btn-rounded.btn_more{
     display: inline-flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
     margin: 0 0 90px;
