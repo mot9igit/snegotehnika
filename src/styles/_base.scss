@@ -1362,11 +1362,10 @@ h1, h2, h3{
         width: 24px;
         height: 24px;
         color: var(--secondary-color);
-        transform: rotate(135deg);
         transition: transform .2s ease;
       }
       &:hover svg{
-        transform: rotate(135deg) translateY(4px);
+        transform: rotate(45deg);
       }
     }
   }
