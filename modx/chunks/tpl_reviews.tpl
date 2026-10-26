@@ -1,9 +1,4 @@
-{* Блок «Отзывы покупателей» во вкладке карточки.
-   Данные — сниплет snippets/get_reviews.php (EasyComm, тред review-{id}):
-   возвращает первые 3 отзыва, остальное и сводку (рейтинг/звёзды/число оценок)
-   отдаёт плейсхолдерами reviews_rest/reviews_rating/reviews_count/reviews_stars.
-   Скрытый список раскрывается кнопкой «еще больше отзывов» (main.js).
-   Сворачивание длинных текстов — .faq__expand (main.js). *}
+
 {set $reviews_first = '@FILE snippets/get_reviews.php' | snippet}
 {set $reviews_rest = $_modx->getPlaceholder('reviews_rest')}
 <div class="product-card__reviews">

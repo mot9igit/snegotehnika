@@ -1,4 +1,4 @@
-import Swiper from 'swiper';
+﻿import Swiper from 'swiper';
 import { Navigation, Pagination, Autoplay, Scrollbar } from 'swiper/modules';
 
 import { Fancybox } from "@fancyapps/ui/dist/fancybox/";
@@ -311,6 +311,27 @@ if (swiperEl) {
 const sliderCards = document.querySelectorAll(".swiper__catalog");
 if (sliderCards.length > 0) {
   sliderCards.forEach((sliderCard) => {
+
+    if (sliderCard.classList.contains('js-info-slider')) {
+      new Swiper(sliderCard, {
+        slidesPerView: 'auto',
+        spaceBetween: 20,
+        modules: [Scrollbar],
+        scrollbar: {
+          el: sliderCard.parentElement.querySelector(".swiper__catalog-scrollbar"),
+          draggable: true,
+          hide: false,
+        },
+        breakpoints: {
+          1800: { spaceBetween: 20 },
+          1200: { spaceBetween: 18 },
+          991: { spaceBetween: 14 },
+          768: { spaceBetween: 12 },
+          0: { spaceBetween: 10 },
+        },
+      });
+      return;
+    }
     const applySliderOffset = (swiperCard) => {
       const offset = getSliderOffset();
       sliderCard.style.setProperty("--slides-offset", `${offset}px`);
@@ -701,6 +722,17 @@ catalogSortTrigger?.addEventListener('click', (e) => {
   e.stopPropagation();
   catalogSortSelect?.classList.toggle('catalog__sort__select--open');
   catalogSortTrigger.classList.toggle('catalog__sort__label--open');
+});
+
+// Старый блок сортировки (.sorting_box) — аккордеон на tablets/мобайле (≤991px)
+const legacySortTrigger = document.querySelector('.sorting_box .sort_title');
+const legacySortParams = document.querySelector('.sorting_box .sort-params');
+
+legacySortTrigger?.addEventListener('click', (e) => {
+  if (!catalogSortMobile.matches) return;
+  e.stopPropagation();
+  legacySortTrigger.classList.toggle('sort_title--open');
+  legacySortParams?.classList.toggle('sort-params--open');
 });
 
 // Выбор сортировки

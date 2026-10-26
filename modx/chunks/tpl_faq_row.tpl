@@ -1,7 +1,4 @@
-{* Один вопрос-ответ. Чанк-строка для сниплета snippets/get_faq.php —
-   все данные приходят готовыми: {$initials} (инициалы автора), {$user_name},
-   {$text}, {$reply_author}, {$reply_text}, {$thread_name}, {$id}.
-   Логики в чанке нет — только разметка. *}
+
 <!--row:v5-->
 <li class="product-card__fac__item" id="ec-{$thread_name}-message-{$id}">
     <div class="product-card__fac__question">

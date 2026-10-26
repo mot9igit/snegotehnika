@@ -1,5 +1,4 @@
-{* Основной чанк карточки товара — единая точка входа, вызывается из шаблона страницы.
-   Внутри: интро + табы (tpl_product_card_tabs) + Комплектация (msAddLinked → tpl_product_card_set_msal). *}
+
 {set $product_code = $_modx->getPlaceholder('article') ?: ($_modx->resource.article ?: ($_pls['article'] ?: '-'))}
 {set $ms_price = $_modx->getPlaceholder('price') | replace : '&#160;' : '' | replace : '&nbsp;' : '' | replace : ' ' : ''}
 {set $product_price = $ms_price ?: ($_modx->resource.price ?: 0)}
@@ -19,12 +18,12 @@
         <input type='hidden' name='id' value='{$_modx->resource.id}'>
         <input type='hidden' name='count' value='1'>
 
-        <div class='dart-container'>
+<div class='dart-container'>
             <h1 class='product-card__title' itemprop='name'>
                 {$_modx->resource.longtitle ?: $_modx->resource.pagetitle}
             </h1>
 
-            <div class='product-card__intro__container'>
+<div class='product-card__intro__container'>
                 <div class='product-card__intro__top'>
                     <div class='product-card__intro__top__container'>
                         <span class='product-card__intro__top__manufacturer'>
@@ -67,14 +66,14 @@
                     </div>
                 </div>
 
-                <div class='swiper__images__intro' data-slider='product__intro'>
+<div class='swiper__images__intro' data-slider='product__intro'>
                     <div class='swiper-wrapper'>
                         {$gallery_placeholder}
                     </div>
                     <div class='scrollbar' data-scrollbar='product__intro'></div>
                 </div>
 
-                <div class='product-card__intro__info'>
+<div class='product-card__intro__info'>
                     <div class='yandex-rating'>
                         {$_modx->runSnippet('!ecThreadRating', [
                             'thread' => 'review-' ~ $_modx->resource.id,
@@ -83,7 +82,7 @@
                         <p>Рейтинг в Яндекс отзывах</p>
                     </div>
 
-                    <div class='product-card__intro__info__buttons'>
+<div class='product-card__intro__info__buttons'>
                         <a href='{$_modx->resource.id | url}' data-id='{$_modx->resource.id}' class='product-card__intro__info__receiveCatalog btn-get-price'>
                             <div>
                                 <span>рассчитать стоимость</span>
@@ -97,7 +96,7 @@
                         </a>
                     </div>
 
-                    {if $product_price > 0 && $_modx->resource.hideprice != 1}
+{if $product_price > 0 && $_modx->resource.hideprice != 1}
                         <div class='product-card__intro__info__price'>
                             <span>от <b class='msoptionsprice-cost msoptionsprice-{$_modx->resource.id} add_linked_price'>{$product_price | number : 0 : '.' : ' '}</b> ₽</span>
                             <p>Цена зависит от комплектации, доставки и спецпредложения.</p>
@@ -105,7 +104,7 @@
                     {/if}
                 </div>
 
-                {if $gallery_placeholder && $_modx->resource.hideprice != 1 && $product_price > 0}
+{if $gallery_placeholder && $_modx->resource.hideprice != 1 && $product_price > 0}
                     <div class='product-card__intro__info__schema' hidden itemprop='offers' itemscope itemtype='http://schema.org/Offer'>
                         <meta itemprop='priceCurrency' content='RUB'>
                         <meta itemprop='price' content='{$product_price | number : 2 : '.' : ''}'>
@@ -113,16 +112,15 @@
                 {/if}
             </div>
 
-            {* Табы должны лежать внутри .product-card и .dart-container — стили вложены так же *}
-            {$_modx->getChunk('@FILE chunks/tpl_product_card_tabs.tpl')}
+{$_modx->getChunk('@FILE chunks/tpl_product_card_tabs.tpl')}
         </div>
     </form>
 
-    {* Комплектация (msAddLinked): tpl строго через @FILE — компонент рендерит чанк
-       самим pdoTools, путь тот же, что у врезок табов; простое имя даёт print_r-массив *}
-    {if $_modx->resource.hideprice != 1 || $_modx->hasSessionContext('mgr')}
+{if $_modx->resource.hideprice != 1 || $_modx->hasSessionContext('mgr')}
         {$_modx->runSnippet('!msAddLinked.input', [
             'tpl' => '@FILE chunks/tpl_product_card_set_msal.tpl'
         ])}
     {/if}
+
+{$_modx->getChunk('@FILE chunks/tpl_product_card_bottom.tpl')}
 </section>

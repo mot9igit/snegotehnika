@@ -1,9 +1,4 @@
-{*
-  Группа свайпера вкладки «Особенности» — вырезана из tpl_product_card_design.tpl
-  (макет pages/poduct-card.html). Отдаётся из get_sections (&features=1 &outChunk=...):
-  name — имя свайпера (уникально на странице), title — название группы (первый h2 блока),
-  items[] — caption, poster, video (пусто у фото-блоков), info, pros_json.
-*}
+
 <div class="product-card__features__item">
     <div class="product-card__features__item__top">
         <span class="product-card__features__item__parameter">{$title}</span>

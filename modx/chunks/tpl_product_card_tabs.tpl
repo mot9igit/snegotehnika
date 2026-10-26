@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="product-card__tabs__nav">
+<div class="product-card__tabs__nav">
         <button type="button" class="product-card__tabs__nav__item active" data-tab="features">
             Особенности
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="offers__item__icon">
@@ -55,13 +55,10 @@
         </button>
     </div>
 
-    {* ===== Вкладка: Особенности ===== *}
-    <div data-tab__content="features" class="product-card__features">
+<div data-tab__content="features" class="product-card__features">
         <h3 class="product-card__features__title"><b>Особенности конструкции</b> {$product_title}</h3>
-        {* Блоки-«фишки» из TV «blocks» — свайпером по макету: get_sections в режиме
-           &features разбирает секции в группы-слайды (h2 секции — название группы) и
-           выводит каждую группу чанком tpl_features_swiper *}
-        {$_modx->runSnippet('@FILE snippets/get_sections.php', [
+
+{$_modx->runSnippet('@FILE snippets/get_sections.php', [
             'tvname' => 'blocks',
             'onlyOut' => 'class="checkmates"',
             'features' => 1,
@@ -69,23 +66,17 @@
         ])}
     </div>
 
-    {* ===== Вкладка: Характеристики ===== *}
-    <div data-tab__content="specifications" class="product-card__specifications" id="fullparams">
+<div data-tab__content="specifications" class="product-card__specifications" id="fullparams">
         <h3>технические <b>характеристики</b></h3>
         {if $_modx->resource.introtext}
             <p itemprop="description">{$_modx->resource.introtext}</p>
         {/if}
-        {* Аккордеон со всеми группами характеристик (данные — опции msProduct из get_options) *}
-        {'@FILE snippets/get_options.php' | snippet : [
+
+{'@FILE snippets/get_options.php' | snippet : [
             'tpl' => '@FILE chunks/tpl_characters_accordion.tpl'
         ]}
-        {* Старый блок 5 главных параметров — раскомментировать, если решим вернуть:
-        {'@FILE snippets/get_main_options.php' | snippet : [
-            'product' => $_modx->resource.id,
-            'tpl' => "@FILE chunks/tpl_main_opts_new.tpl"
-        ]}
-        *}
-        <div class="product-card__specifications__buttons">
+
+<div class="product-card__specifications__buttons">
             <a href="#" class="product-card__specifications__button">
                 скачать характеристику
                 <i class="icon-material-symbols-light_picture-as-pdf-outline-sharp"></i>
@@ -97,8 +88,7 @@
         </div>
     </div>
 
-    {* ===== Вкладка: Видео обзоры ===== *}
-    <div data-tab__content="videoReviews" class="product-card__videoReviews">
+<div data-tab__content="videoReviews" class="product-card__videoReviews">
         <h3><b>ВИДЕО ОБЗОР.</b> {$product_title | upper}</h3>
         {'@FILE snippets/get_vkclips.php' | snippet : [
             'id' => $_modx->resource.id,
@@ -106,18 +96,15 @@
         ]}
     </div>
 
-    {* ===== Вкладка: Вопрос-ответ ===== *}
-    <div data-tab__content="questions">
+<div data-tab__content="questions">
         {'@FILE chunks/tpl_faq.tpl' | chunk}
     </div>
 
-    {* ===== Вкладка: Отзывы ===== *}
-    <div data-tab__content="reviews">
+<div data-tab__content="reviews">
         {'@FILE chunks/tpl_reviews.tpl' | chunk}
     </div>
 
-    {* ===== Вкладка: Оплата и доставка ===== *}
-    <div data-tab__content="delivery" class="product-card__delivery">
+<div data-tab__content="delivery" class="product-card__delivery">
         <h3>Условия <b>оплаты и доставки</b></h3>
         {if $_modx->getPlaceholder('+conf_delieveryinfo')}
             <div class="product-card__delivery__content">
@@ -138,7 +125,6 @@
     </div>
 </section>
 
-{* Модалка «Особенности»: открывается по клику на текст слайда (свайпер features) *}
 <div class="modal" id="modal-video-info" data-modal aria-hidden="true">
     <div class="modal__overlay" data-modal-close></div>
     <div class="modal__dialog">
@@ -156,9 +142,6 @@
     </div>
 </div>
 
-{* Модалка «Задать вопрос»: форма EasyComm. Тред question-{id} — тот же, что у
-   списка вопросов; настройки валидации сохраняются в свойствах треда и
-   подхватываются action.php при AJAX-отправке (ec.custom.js). *}
 <div class="modal" id="modal-questions" data-modal aria-hidden="true">
     <div class="modal__overlay" data-modal-close></div>
     <div class="modal__dialog">
@@ -181,9 +164,6 @@
     </div>
 </div>
 
-{* Модалка «Оставить отзыв»: форма EasyComm. Тред review-{id} — тот же, что у
-   списка отзывов и рейтинга ecThreadRating; rating (оценка звёздами 1-5)
-   включён в allowedFields, иначе поле не сохранится при создании сообщения. *}
 <div class="modal" id="modal-reviews" data-modal aria-hidden="true">
     <div class="modal__overlay" data-modal-close></div>
     <div class="modal__dialog">

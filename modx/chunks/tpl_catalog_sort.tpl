@@ -32,18 +32,18 @@
 			{set $optToggle = '0'}
 			{if count($optionParts) > 2}{set $optToggle = $optionParts[2]}{/if}
 
-			{set $isActive = $optField == $curField}
+{set $isActive = $optField == $curField}
 			{set $targetDir = $optDir}
 			{if $isActive && $optToggle == '1'}
 				{if $curDir == 'asc'}{set $targetDir = 'desc'}{else}{set $targetDir = 'asc'}{/if}
 			{/if}
 
-			{set $value = sprintf('%s:%s', $optField, $targetDir)}
+{set $value = sprintf('%s:%s', $optField, $targetDir)}
 			{set $qs = sprintf('sort=%s', urlencode($value))}
 			{if $page}{set $qs = sprintf('%s&ppage.nav=%s', $qs, urlencode($page))}{/if}
 			{set $url = "{$pageUrl}?{$qs}"}
 
-			<a href="{$url}" class="catalog__sorting__item{if $isActive} active{/if}{if $optToggle == '1'} catalog__sorting__item--choice{/if}{if $isActive && $curDir == 'desc'} sort-desc{/if}">{$optTitle}{if $optToggle == '1'}<span class="icon-arrow-top"></span>{/if}</a>
+<a href="{$url}" class="catalog__sorting__item{if $isActive} active{/if}{if $optToggle == '1'} catalog__sorting__item--choice{/if}{if $isActive && $curDir == 'desc'} sort-desc{/if}">{$optTitle}{if $optToggle == '1'}<span class="icon-arrow-top"></span>{/if}</a>
 		{/foreach}
 	</div>
 </div>

@@ -21,39 +21,23 @@ if(!$docid){
 }
 if($tvname){
 	$resource_id = $resource->get("id");
-	/* $options = array(
-		xPDO::OPT_CACHE_KEY => 'default/sections/'.$tvname,
-	);
-	$str = $modx->cacheManager->get($resource_id, $options);
-	if($str){
-		$output = $str;
-		return $output;	
-	}else{ */
-		$pdo = $modx->getParser()->pdoTools;
+
+$pdo = $modx->getParser()->pdoTools;
 		$output = '';
 		$tvcontent = json_decode($resource->getTVValue($tvname), 1);
 		if(!$tvcontent){
 			$tvcontent = array();
 		}
-		/* &only=`подстрока` — выводит только те блоки, в полях которых встречается подстрока.
-		   &exclude=`подстрока` — исключает блоки, в полях которых встречается подстрока.
-		   &onlyOut=`фрагмент` — оставляет только блоки, чей ГОТОВЫЙ html содержит фрагмент (напр. class="checkmates").
-		   &excludeOut=`фрагмент` — исключает блоки, чей готовый html содержит фрагмент.
-		   &striph2=`1` — убирает первый <h2> из вывода блока (дубль заголовка). */
-		$only = isset($only) ? $only : '';
+
+$only = isset($only) ? $only : '';
 		$exclude = isset($exclude) ? $exclude : '';
 		$onlyOut = isset($onlyOut) ? $onlyOut : '';
 		$excludeOut = isset($excludeOut) ? $excludeOut : '';
 		$striph2 = isset($striph2) ? $striph2 : '';
-		/* &outChunk=`@FILE chunks/...` — рендерит блоки указанным чанком вместо своего
-		   (например, чтобы показать блоки свайпером по макету). */
-		$outChunk = isset($outChunk) ? $outChunk : '';
-		/* &features=`1` — режим вкладки «Особенности»: блок рендерится своим чанком,
-		   разбирается в группы-слайды свайпера по макету (первый <h2> блока — название
-		   группы, айтемы <!-- item --> — слайды) и выводится чанком &outChunk.
-		   Слайд получает: caption — заголовок, poster — превью, video — ссылка на видео
-		   (пусто у фото-блоков), info — ключ модалки, pros_json — преимущества в JSON. */
-		$features = isset($features) ? $features : '';
+
+$outChunk = isset($outChunk) ? $outChunk : '';
+
+$features = isset($features) ? $features : '';
 		$gi = 0;
 		foreach($tvcontent as $section){
 			if($only !== '' || $exclude !== ''){
@@ -87,10 +71,8 @@ if($tvname){
 				continue;
 			}
 			if($features){
-				/* Название группы — первый <h2> блока (в режиме &features его не вырезаем).
-				   Служебные дубли («Особенности…») считаем пустыми — подпись не выводится,
-				   пока в TV не заполнены нормальные названия секций */
-				$gtitle = '';
+
+$gtitle = '';
 				if(preg_match('#<h2[^>]*>(.*?)</h2>#is', $chunkOut, $hm)){
 					$gtitle = trim(strip_tags($hm[1]));
 					if(preg_match('/^Особенности/iu', $gtitle)){
@@ -146,8 +128,8 @@ if($tvname){
 			}
 			$output .= $chunkOut;
 		}
-		/* $modx->cacheManager->set($resource_id, $output, 3600, $options); */
-		if($tolog){
+
+if($tolog){
 			$time = round((microtime(true) - $time_start), 2);
 			$modx->log(xPDO::LOG_LEVEL_ERROR, $time." с - Конец парсинга блоков", array(
 				'target' => 'FILE',
@@ -157,7 +139,7 @@ if($tvname){
 			));
 		}
 		return $output;	
-	/* }   */
+
 }else{
   echo "ERROR: не указан TV!";
 }

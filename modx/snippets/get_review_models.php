@@ -1,22 +1,10 @@
 <?php
-/**
- * Список моделей для дропдауна «Модель техники» в модалке отзыва (form_review.tpl).
- * Товары из категории текущего товара; текущий товар помечен active/checked
- * прямо здесь (в разметке). Возвращает HTML пунктов <li> для ul.model__choice__list.
- *
- * Вызов из чанка: {'@FILE snippets/get_review_models.php' | snippet}
- * В чанке не должно быть {set}/запросов — при заливке они не доезжают.
- *
- * @var modX $modx
- * @var array $scriptProperties
- */
 
 $parent = (int)$modx->resource->parent;
 if (!$parent) {
     return '';
 }
 
-/* @var pdoResources приходит с pdoTools */
 $rows = $modx->runSnippet('pdoResources', array(
     'parents' => $parent,
     'depth' => 0,

@@ -1,13 +1,8 @@
-{* Плитка товара в каталоге — чанк mFilter2 (&tpl) и pdoPage, вызывается как chunks/tpl_product.tpl.
-   Восстановлен 13.10.2026 по макету pages/catalog.html: исходный файл на сервере утерян
-   (pdoTools: Template chunks/tpl_product.tpl not found → пустые списки в каталоге).
-   Блок характеристик (Габариты/Мощность/...) пока не выводится — источник данных уточняется. *}
+
 {set $tile_img = $image ?: ($tv_image ?: '')}
-{* Списки (mFilter2/pdoPage) не отдают поле hideprice — запрашиваем его у товара напрямую,
-   иначе цена видна даже там, где её показывать нельзя. *}
+
 {set $tile_hideprice = $hideprice ?: $_modx->runSnippet('pdoField', ['id' => $id, 'field' => 'hideprice'])}
-{* Цена приходит уже отформатированной («405 000» / «405.000» с разделителями) —
-   вычищаем пробелы/nbsp/точки, приводим к числу и форматируем заново. *}
+
 {set $tile_price = ($price ?: '') | replace : '&#160;' : '' | replace : '&nbsp;' : '' | replace : ' ' : '' | replace : '.' : ''}
 {set $tile_price = $tile_price ?: 0}
 <div class="catalog__item">
@@ -34,6 +29,20 @@
             </div>
             <a href="[[~[[+id]]]]" class="catalog__item__name">{$pagetitle}</a>
         </div>
+        {set $tile_opts_tv = ($parent ?: $_modx->resource.id) | resource : 'options'}
+        {set $tile_opts = ''}
+        {if $tile_opts_tv}
+            {set $tile_opts = $_modx->runSnippet("msProductOptions", [
+                'onlyOptions' => $tile_opts_tv,
+                'product' => $id,
+                'tpl' => '@FILE chunks/tpl_main_opt_product.tpl'
+            ])}
+        {/if}
+        {if $tile_opts}
+            <div class="catalog__item__info">
+                {$tile_opts}
+            </div>
+        {/if}
         <div class="catalog__item__footer">
             {if $tile_price > 0 && !$tile_hideprice}
                 <span>от <b>{$tile_price | number : 0 : '.' : ' '} ₽</b></span>

@@ -1,27 +1,19 @@
-{* Форма «Оставить отзыв» (модалка modal-reviews) — сниплет !ecForm, tplForm.
-   Сантехника EasyComm: класс ec-form + data-fid (AJAX в ec.custom.js), скрытые
-   thread/subject, honeypot-поле {$antispam_field} (должно остаться пустым).
-   Выбор модели (по макету): пункты отдаёт сниплет snippets/get_review_models.php
-   (товары категории текущего товара, текущий выбран по умолчанию); при выборе
-   другого товара JS меняет скрытый thread на review-{id} выбранного — отзыв
-   уходит в его тред. В чанке нет {set} и запросов — при заливке не доезжают.
-   Отзыв появляется после публикации модератором. *}
+
 <form class="ec-form" method="post" id="ec-form-{$fid}" data-fid="{$fid}">
     <input type="hidden" name="thread" value="{$thread}">
     <input type="hidden" name="subject" value="review">
     <div id="ec-form-success-{$fid}"></div>
 
-    {* honeypot EasyComm: скрыт стилями, при отправке должен быть пустым *}
-    <div style="position:absolute!important;left:-9999px!important;" aria-hidden="true">
+<div style="position:absolute!important;left:-9999px!important;" aria-hidden="true">
         <input type="text" name="{$antispam_field}" value="" tabindex="-1" autocomplete="off">
     </div>
 
-    <div class="modal__top">
+<div class="modal__top">
         <h2>Поделитесь впечатлением о покупке</h2>
         <span>Нам важно ваше мнение — отзывы помогают другим покупателям</span>
     </div>
 
-    <div class="modal__model__choice">
+<div class="modal__model__choice">
         <h4>Модель техники</h4>
         <div class="model__choice__dropdown">
             <button class="model__choice__btn" type="button">
@@ -36,7 +28,7 @@
         </div>
     </div>
 
-    <div class="modal__reviews__item">
+<div class="modal__reviews__item">
         <h4>Ваш отзыв</h4>
         <textarea name="text" rows="6" placeholder="Текст..." required></textarea>
     </div>

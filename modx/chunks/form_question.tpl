@@ -1,21 +1,14 @@
-{* Форма «Задать вопрос» (модалка modal-questions) — сниплет !ecForm, tplForm.
-   Сантехника EasyComm: класс ec-form + data-fid (AJAX в ec.custom.js), скрытые
-   thread/subject, honeypot-поле {$antispam_field} (должно остаться пустым).
-   Выбор модели — тот же дропдаун, что в отзыве (пункты отдаёт сниплет
-   snippets/get_review_models.php); при выборе другого товара JS меняет
-   скрытый thread на question-{id} выбранного. Отправленный вопрос попадает
-   в тред question-{id} и появляется на сайте после публикации модератором. *}
+
 <form class="ec-form" method="post" id="ec-form-{$fid}" data-fid="{$fid}">
     <input type="hidden" name="thread" value="{$thread}">
     <input type="hidden" name="subject" value="question">
     <div id="ec-form-success-{$fid}"></div>
 
-    {* honeypot EasyComm: скрыт стилями, при отправке должен быть пустым *}
-    <div style="position:absolute!important;left:-9999px!important;" aria-hidden="true">
+<div style="position:absolute!important;left:-9999px!important;" aria-hidden="true">
         <input type="text" name="{$antispam_field}" value="" tabindex="-1" autocomplete="off">
     </div>
 
-    <div class="modal__top">
+<div class="modal__top">
         <h2>Задать вопрос</h2>
         <span>Ответим в ближайшее время</span>
     </div>
@@ -23,7 +16,7 @@
     <input type="email" name="user_email" placeholder="Email" required>
     <input type="tel" name="user_contacts" placeholder="+7(___)___-__-__" required>
 
-    <div class="modal__model__choice">
+<div class="modal__model__choice">
         <h4>Модель техники</h4>
         <div class="model__choice__dropdown">
             <button class="model__choice__btn" type="button">
@@ -38,7 +31,7 @@
         </div>
     </div>
 
-    <div class="modal__reviews__item">
+<div class="modal__reviews__item">
         <h4>Ваш вопрос</h4>
         <textarea name="text" rows="6" placeholder="Текст..." required></textarea>
     </div>

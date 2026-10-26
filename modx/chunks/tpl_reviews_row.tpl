@@ -1,6 +1,4 @@
-{* Один отзыв. Чанк-строка для сниплета snippets/get_reviews.php —
-   все данные приходят готовыми: {$initials}, {$user_name}, {$stars} (HTML звёзд),
-   {$date_ru}, {$text}. Логики в чанке нет — только разметка. *}
+
 <!--revrow:v2-->
 <li class="product-card__reviews__item" id="ec-{$thread_name}-message-{$id}">
     <div class="product-card__reviews__item__top">
