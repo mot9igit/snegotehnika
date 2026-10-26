@@ -12899,15 +12899,6 @@ body.modal-open{
     gap: 5px;
   }
 }
-/* Мобильные (2 колонки): нечётное число карточек даёт «висячий» последний ряд —
-   прячем последнюю, чтобы ряды были полными. Товары меньше 8 не трогаем. */
-@media (max-width: $small-tablets){
-  #mse2_results > .catalog__item:last-child:nth-child(odd),
-  #pdopage > .dart-row.rows > .catalog__item:last-child:nth-child(odd),
-  #pdopage > .row.rows > .catalog__item:last-child:nth-child(odd){
-    display: none;
-  }
-}
 /* Карточки в 3 колонке (сайдбар слева) уже, чем в .catalog__container:
    строка характеристики не должна наезжать — подписи не сжимаем,
    значения переносим. */
