@@ -983,6 +983,7 @@ h1, h2, h3{
         & + .catalog__sorting__item{
           margin-left: 15px;
         }
+        &:hover,
         &.active{
           color: var(--secondary-color);
         }
@@ -8808,6 +8809,56 @@ body.modal-open{
   }
 }
 
+/* Аккордеон сортировки с 1200px (дубль .catalog__sort из @media <=$tablets) */
+@media (max-width: $small-desktop) {
+  .catalog{
+    .catalog__sort{
+      flex-wrap: wrap;
+      .catalog__sort__label{
+        padding: 12.5px 20px;
+        margin-right: 0px;
+        margin-bottom: 20px;
+        width: 100%;
+        cursor: pointer;
+        .catalog__sort__label__icon{
+          display: block;
+          margin-left: 15px;
+          flex-shrink: 0;
+          width: 24px;
+          height: 24px;
+          color: #fff;
+          transition: all .2s ease;
+        }
+        &--open{
+          .catalog__sort__label__icon{
+            transform: rotate(45deg);
+          }
+        }
+      }
+      .catalog__sort__select{
+        width: 100%;
+        display: none;
+        flex-direction: column;
+        background-color: transparent;
+        padding: 0px;
+        .catalog__sorting__item{
+          font-size: 18px;
+          background-color: #fff;
+          border-radius: 6px;
+          padding: 12px 20px;
+          & + .catalog__sorting__item{
+            margin-left: 0px;
+            margin-top: 10px;
+          }
+        }
+        &.catalog__sort__select--open{
+          display: flex;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: $small-tablets) {
   h1, h2, h3{
     font-size: 24px;
@@ -12784,6 +12835,9 @@ body.modal-open{
   gap: 30px;
   margin-left: 0;
   margin-right: 0;
+  @media (max-width: 1799px){
+    grid-template-columns: repeat(2, 1fr);
+  }
   @media (max-width: $small-tablets){
     grid-template-columns: repeat(2, 1fr);
   }
@@ -13108,7 +13162,7 @@ body.modal-open{
       }
     }
   }
-  @media (max-width: $tablets){
+  @media (max-width: $small-desktop){
     .sorting_box_inner{
       gap: 20px;
       .sort_title{

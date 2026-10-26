@@ -713,10 +713,10 @@ videoBlocks.forEach((block) => {
 const catalogSortSelect = document.querySelector('.catalog__sort__select');
 const catalogSortItems = document.querySelectorAll('.catalog__sorting__item');
 const catalogSortTrigger = document.querySelector('[data-sort-trigger]');
-const catalogSortMobile = window.matchMedia('(max-width: 991px)');
+const catalogSortMobile = window.matchMedia('(max-width: 1200px)');
 
-// Аккордион на tablets/мобайле (≤991px):
-// открытие/закрытие списка — только кликом по спану
+// Аккордеон на small-desktop/мобайле (<=1200px):
+// открытие/закрытия списка — только кликом по спану
 catalogSortTrigger?.addEventListener('click', (e) => {
   if (!catalogSortMobile.matches) return;
   e.stopPropagation();
@@ -724,7 +724,7 @@ catalogSortTrigger?.addEventListener('click', (e) => {
   catalogSortTrigger.classList.toggle('catalog__sort__label--open');
 });
 
-// Старый блок сортировки (.sorting_box) — аккордеон на tablets/мобайле (≤991px)
+// Старый блок сортировки (.sorting_box) — аккордеон на small-desktop/мобайле (<=1200px)
 const legacySortTrigger = document.querySelector('.sorting_box .sort_title');
 const legacySortParams = document.querySelector('.sorting_box .sort-params');
 
