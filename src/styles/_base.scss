@@ -1405,6 +1405,18 @@ h1, h2, h3{
       }
     }
   }
+  /* msearch2/css/web/default.css: #mse2_mfilter .btn_more{width:150px;display:block;margin:auto}
+     id-селектор перебивает наши правила — гасим для обеих кнопок «Загрузить еще» */
+  #mse2_mfilter .catalog__more__link{
+    display: flex;
+    width: auto;
+    margin: 0;
+  }
+  #mse2_mfilter .btn.btn-blue.btn-rounded.btn_more{
+    display: inline-flex;
+    width: auto;
+    margin: 0 0 90px;
+  }
   // Accordion
   .accordion{
     margin-bottom: 0px;
@@ -12885,6 +12897,15 @@ body.modal-open{
     margin-left: -15px;
     margin-right: -15px;
     gap: 5px;
+  }
+}
+/* Мобильные (2 колонки): нечётное число карточек даёт «висячий» последний ряд —
+   прячем последнюю, чтобы ряды были полными. Товары меньше 8 не трогаем. */
+@media (max-width: $small-tablets){
+  #mse2_results > .catalog__item:last-child:nth-child(odd),
+  #pdopage > .dart-row.rows > .catalog__item:last-child:nth-child(odd),
+  #pdopage > .row.rows > .catalog__item:last-child:nth-child(odd){
+    display: none;
   }
 }
 /* Карточки в 3 колонке (сайдбар слева) уже, чем в .catalog__container:
