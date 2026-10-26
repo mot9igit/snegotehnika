@@ -1199,3 +1199,12 @@ document.querySelectorAll(".new__blocks__tags").forEach((block) => {
 
   update();
 });
+
+// Catalog: карточки, скрытые на мобайле правилом [data-mobile-count],
+// возвращаются после первого клика по кнопке «Загрузить еще».
+document.addEventListener("click", (e) => {
+  const btn = e.target?.closest?.(".btn_more");
+  if (!btn) return;
+  const box = btn.closest("[data-mobile-count]") || document.querySelector("[data-mobile-count]");
+  box?.classList.add("is-more-open");
+});

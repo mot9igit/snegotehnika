@@ -12899,6 +12899,20 @@ body.modal-open{
     gap: 5px;
   }
 }
+/* Мобильный лимит карточек: на контейнере data-mobile-count="N".
+   На десктопе не действует. На мобайле прячет всё после N-й карточки,
+   пока не нажали «Загрузить еще» — тогда на контейнер вешается
+   .is-more-open и скрытые карточки показываются вместе с подгруженными. */
+@media (max-width: $small-tablets){
+  @for $n from 2 through 10{
+    [data-mobile-count="#{$n}"]:not(.is-more-open){
+      #mse2_results > .catalog__item:nth-child(n + #{$n + 1}),
+      > .dart-row > .catalog__item:nth-child(n + #{$n + 1}){
+        display: none;
+      }
+    }
+  }
+}
 /* Карточки в 3 колонке (сайдбар слева) уже, чем в .catalog__container:
    строка характеристики не должна наезжать — подписи не сжимаем,
    значения переносим. */
