@@ -613,6 +613,14 @@ h1, h2, h3{
           cursor: pointer;
         }
 
+        .sets__approval__label {
+          display: flex;
+          align-items: flex-start;
+          cursor: pointer;
+          width: 100%;
+          margin: 0;
+        }
+
         .check-circle {
           margin-right: 15px;
           flex-shrink: 0;
@@ -623,7 +631,7 @@ h1, h2, h3{
           border: 1px var(--secondary-color) solid;
           border-radius: 50%;
           background-color: transparent;
-          z-index: 1;
+          margin-top: 1px;
           pointer-events: none;
         }
 
