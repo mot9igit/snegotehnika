@@ -1208,3 +1208,38 @@ document.addEventListener("click", (e) => {
   const box = btn.closest("[data-mobile-count]") || document.querySelector("[data-mobile-count]");
   box?.classList.add("is-more-open");
 });
+
+// --- УНИВЕРСАЛЬНАЯ ВАЛИДАЦИЯ ЧЕКБОКСОВ ---
+document.addEventListener('DOMContentLoaded', function() {
+    const allForms = document.querySelectorAll('form');
+
+    allForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            const requiredCheckboxes = form.querySelectorAll('input[type="checkbox"][required]');
+            
+            let isValid = true;
+            let errorMessage = '';
+
+            requiredCheckboxes.forEach(checkbox => {
+                if (!checkbox.checked) {
+                    isValid = false;
+                    errorMessage = checkbox.dataset.error || 'Пожалуйста, подтвердите согласие с условиями';
+
+                    const parent = checkbox.closest('.sets__approval') || checkbox.closest('label');
+                    if (parent) {
+                        parent.style.color = 'red'; 
+                        setTimeout(() => {
+                            parent.style.color = '';
+                        }, 3000);
+                    }
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert(errorMessage);
+                return false;
+            }
+        });
+    });
+});
