@@ -36,35 +36,17 @@
                 </div>
               </div>
               <ul class="info__right__container">
-                <li class="info__right__item">
-                  <img src="img/icons/check-circle.svg" alt="" class="info__check">
-                  <div>
-                    <div class="info__right__item__title">Собственное производство</div>
-                    <div class="info__right__item__text">Cильный конструкторский отдел. Разработка идет в конструкторской среде Solid Edge.</div>
-                  </div>
-                </li>
-                <li class="info__right__item">
-                  <img src="img/icons/check-circle.svg" alt="" class="info__check">
-                  <div>
-                    <div class="info__right__item__title">Дилерская сеть в 15 регионах</div>
-                    <div class="info__right__item__text">Мы активно развиваем дилерскую сеть, чтобы наша снеготехника была к вам ближе!</div>
-                  </div>
-                </li>
-                <li class="info__right__item">
-                  <img src="img/icons/check-circle.svg" alt="" class="info__check">
-                  <div>
-                    <div class="info__right__item__title">Доставка по всей России</div>
-                    <div class="info__right__item__text">Упаковка заказа и доставка до терминалов транспортных компаний  бесплатно.</div>
-                  </div>
-                </li>
-                <li class="info__right__item">
-                  <img src="img/icons/check-circle.svg" alt="" class="info__check">
-                  <div>
-                    <div class="info__right__item__title">Экскурсия на производство</div>
-                    <div class="info__right__item__text">Каждому гостю покажем  цех сборки, расскажем подробнее о нас. Всех ждем в гости!</div>
-                  </div>
-                </li>
-              </ul>
+    			{set $advantages = $_modx->resource.info_advantages | json_decode:true}
+    			{foreach $advantages as $adv}
+        			<li class="info__right__item">
+            				<img src="img/icons/check-circle.svg" alt="" class="info__check">
+            				<div>
+                				<div class="info__right__item__title">{$adv.title}</div>
+                				<div class="info__right__item__text">{$adv.text}</div>
+            				</div>
+        			</li>
+    			{/foreach}
+	      </ul>
               <div class="info__right__buttons">
                 <a href="#" class="info__right__button info__right__button--transparent">
                   о производстве

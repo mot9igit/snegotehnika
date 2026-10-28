@@ -6,8 +6,6 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 
 import 'swiper/css';
 
-import { addToCart, removeFromCart, setQty, clearCart, getCart, updateCartCount } from './cart';
-
 // Плагин jquery.matchHeight в шаблонах MODX не подключён — вызовы падают с TypeError.
 // Заглушка равносильна текущему поведению (высоты считает CSS Grid), но без ошибки в консоли.
 if (window.jQuery && !window.jQuery.fn.matchHeight) {
@@ -119,10 +117,6 @@ if (sideNavigationBtn && sideNavigationContent) {
   });
 }
 
-
-
-// Cart count
-updateCartCount();
 
 
 // Header search placeholder
@@ -623,44 +617,6 @@ document.querySelectorAll('[data-modal-open="modal-video-info"]').forEach((btn) 
 });
 
 // Modal offers: акция и описание по ключу data-offer
-const offerContent = {
-  'offer-1': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-  'offer-2': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-  'offer-3': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-  'offer-4': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-  'offer-5': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-  'offer-6': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-  'offer-7': {
-    title: 'Приведи друга и получи 5000₽ на карту',
-    img: '/img/modals/img.jpg',
-    text: 'Описание акции. Подробные условия участия — замените этот текст реальным описанием.',
-  },
-};
-
 const offersModal = document.querySelector('#modal-offers');
 const offersTitle = offersModal?.querySelector('[data-offers-title]');
 const offersImg = offersModal?.querySelector('[data-offers-img]');
@@ -668,11 +624,10 @@ const offersText = offersModal?.querySelector('[data-offers-text]');
 
 document.querySelectorAll('[data-modal-open="modal-offers"]').forEach((btn) => {
   btn.addEventListener('click', () => {
-    const data = offerContent[btn.dataset.offer];
-    if (!data || !offersModal) return;
-    offersTitle.textContent = data.title;
-    if (offersImg) offersImg.src = data.img;
-    offersText.textContent = data.text;
+    if (!offersModal) return;
+    offersTitle.textContent = btn.dataset.offerTitle || '';
+    if (offersImg) offersImg.src = btn.dataset.offerImg || '';
+    offersText.textContent = btn.dataset.offerText || '';
   });
 });
 
@@ -830,155 +785,6 @@ document.querySelectorAll('[data-faq-show-more]').forEach((button) => {
     button.style.display = 'none';
   });
 });
-
-// cart__payment__promocode button active state
-const promocodeInput = document.querySelector('.cart__payment__promocode input');
-const promocodeButton = document.querySelector('.cart__payment__promocode button');
-if (promocodeInput && promocodeButton) {
-  const updatePromocode = () => {
-    const hasText = promocodeInput.value.trim().length > 0;
-    promocodeButton.classList.toggle('active', hasText);
-    promocodeButton.disabled = !hasText;
-  };
-  promocodeInput.addEventListener('input', updatePromocode);
-  updatePromocode();
-}
-
-// Cart page rendering
-const formatCartPrice = (value) => Number(value || 0).toLocaleString('ru-RU').replace(/\s/g, '\u00A0');
-
-const parseCartPrice = (text) => Number(text.replace(/[^0-9]/g, ''));
-
-const escapeHtml = (str) =>
-  String(str ?? '').replace(/[&<>"']/g, (c) => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#39;',
-  }[c]));
-
-const cartProductsContainer = document.querySelector('[data-cart-products]');
-const cartEmptyState = document.querySelector('[data-cart-empty]');
-const productsSumEl = document.querySelector('[data-cart-products-sum]');
-const deliverySumEl = document.querySelector('[data-cart-delivery-sum]');
-const totalSumEl = document.querySelector('[data-cart-total-sum]');
-
-const recalcCartTotal = () => {
-  if (!productsSumEl && !totalSumEl) return;
-  let productsTotal = 0;
-  document.querySelectorAll('.cart__product').forEach((product) => {
-    const qty = Number(product.querySelector('.quantity-value').textContent) || 0;
-    productsTotal += qty * (Number(product.dataset.price) || 0);
-  });
-  const delivery = deliverySumEl ? parseCartPrice(deliverySumEl.textContent) : 0;
-  if (productsSumEl) productsSumEl.textContent = formatCartPrice(productsTotal);
-  if (totalSumEl) totalSumEl.textContent = formatCartPrice(productsTotal + delivery);
-};
-
-const renderCart = () => {
-  if (!cartProductsContainer) return;
-  const cart = getCart();
-  cartProductsContainer.innerHTML = '';
-
-  cart.forEach((product) => {
-    const row = document.createElement('div');
-    row.className = 'cart__product';
-    row.dataset.price = product.price;
-    row.dataset.id = product.id;
-    row.innerHTML = `
-      <div class="cart__product__left">
-        <img src="${escapeHtml(product.img || '/img/cart/product__img.jpg')}" alt="" class="cart__product__img">
-        <div class="cart__product__left__container">
-          <span>${escapeHtml(product.sku || product.id)}</span>
-          <a href="#">${escapeHtml(product.name)}</a>
-        </div>
-      </div>
-      <div class="cart__product__right">
-        <div class="cart__product__quantity">
-          <div class="cart__product__quantity__inner">
-            <button class="quantity-minus">-</button>
-            <span class="quantity-value">${product.qty}</span>
-            <button class="quantity-plus">+</button>
-          </div>
-        </div>
-        <div class="cart__product__right__container">
-          <button type="button">
-            <svg><use xlink:href="#product-delete"></use></svg>
-          </button>
-          <div class="cart__product__right__price">
-            <span>${formatCartPrice(product.price * product.qty)}</span> руб.
-          </div>
-        </div>
-      </div>`;
-
-    const qtyEl = row.querySelector('.quantity-value');
-    row.querySelector('.quantity-minus').addEventListener('click', () => setQty(product.id, (Number(qtyEl.textContent) || 1) - 1));
-    row.querySelector('.quantity-plus').addEventListener('click', () => setQty(product.id, (Number(qtyEl.textContent) || 1) + 1));
-    row.querySelector('.cart__product__right__container button').addEventListener('click', () => removeFromCart(product.id));
-
-    cartProductsContainer.appendChild(row);
-  });
-
-  const isEmpty = cart.length === 0;
-  if (cartEmptyState) cartEmptyState.style.display = isEmpty ? '' : 'none';
-  ['.cart__delivery', '.cart__address', '.cart__right'].forEach((sel) => {
-    document.querySelectorAll(sel).forEach((el) => {
-      el.style.display = isEmpty ? 'none' : '';
-    });
-  });
-  recalcCartTotal();
-};
-
-if (cartProductsContainer) {
-  renderCart();
-}
-
-const clearCartBtn = document.querySelector('.cart__top__button');
-if (clearCartBtn) {
-  clearCartBtn.addEventListener('click', () => clearCart());
-}
-
-window.addEventListener('cart:change', () => {
-  updateCartCount();
-  if (cartProductsContainer) renderCart();
-});
-
-// Modal added-to-cart quantity
-document.querySelectorAll('.modal__cart__item .cart__product__quantity').forEach((quantity) => {
-  const qtyEl = quantity.querySelector('.quantity-value');
-  const minusBtn = quantity.querySelector('.quantity-minus');
-  const plusBtn = quantity.querySelector('.quantity-plus');
-  if (!qtyEl || !minusBtn || !plusBtn) return;
-
-  minusBtn.addEventListener('click', () => {
-    qtyEl.textContent = Math.max(1, (Number(qtyEl.textContent) || 1) - 1);
-  });
-  plusBtn.addEventListener('click', () => {
-    qtyEl.textContent = (Number(qtyEl.textContent) || 1) + 1;
-  });
-});
-
-// Modal added-to-cart: actions
-document.querySelector('.modal__cart__button')?.addEventListener('click', closeModal);
-document.querySelector('.modal__cart__button-red')?.addEventListener('click', () => {
-  window.location.href = '/pages/cart.html';
-});
-
-document.querySelectorAll('.modal__cart__item .modal__cart__btn').forEach((btn, index) => {
-  btn.addEventListener('click', () => {
-    const item = btn.closest('.modal__cart__item');
-    if (!item) return;
-    const name = item.querySelector('.modal__cart__item__left__info p')?.textContent?.trim();
-    const price = parseInt((item.querySelector('.modal__cart__item__left__info span')?.textContent || '').replace(/[^0-9]/g, ''), 10) || 0;
-    const qty = Number(item.querySelector('.quantity-value')?.textContent) || 1;
-    const img = item.querySelector('.modal__cart__item__left img')?.getAttribute('src') || '';
-    addToCart({ id: `modal-item-${index + 1}`, name, price, img, qty });
-    const qtyEl = item.querySelector('.quantity-value');
-    if (qtyEl) qtyEl.textContent = '1';
-  });
-});
-
 
 // Scroll__footer
 const scrollTopButton = document.querySelector('[data-scroll-top]');
@@ -1242,4 +1048,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
+
+// Contacts Staff Swiper
+const contactsStaffSwipers = document.querySelectorAll(".contacts__intro__cards");
+contactsStaffSwipers.forEach((slider) => {
+  new Swiper(slider, {
+    slidesPerView: 1,
+    spaceBetween: 20,
+    watchOverflow: true,
+    breakpoints: {
+      1200: { slidesPerView: 3 },
+      991: { slidesPerView: 2.4 },
+      768: { slidesPerView: 2 },
+      0: { slidesPerView: 1.2 }
+    }
+  });
 });

@@ -9,37 +9,31 @@
                 <img src="img/sets/sets-img.png" alt="" class="sets__img">
               </div>
               <div class="sets__social">
-                <a href="#" class="sets__social__button">
+                <a href="{$_modx->getPlaceholder('+conf_vk')}" class="sets__social__button">
                   В контакте
                   <img src="/assets/templates/snegotehnika/img/icons/vk.svg" alt="">
                 </a>
-                <a href="#" class="sets__social__button">
+                <a href="https://t.me/snegotehnika_bot" class="sets__social__button">
                   телеграмм
                   <img src="/assets/templates/snegotehnika/img/icons/telegram.svg" alt="">
                 </a>
-                <a href="#" class="sets__social__button">
+                <a href="https://max.ru/u/f9LHodD0cOLeOIf-F1rpj-y-2YCUbSyrYOM8HvWYp7c0VP00lVEX42ghmiE" class="sets__social__button">
                   max
                   <img src="/assets/templates/snegotehnika/img/icons/max.svg" alt="">
                 </a>
               </div>
-              <form action="/">
-                <input type="email" name="email" placeholder="Email" class="sets__email" required>
-                <div class="sets__captcha">Каптча</div>
-                <button type="submit" class="sets__button">
-                  <div class="sets__button__container">
-                    <span>Получить каталог</span>
-                    <p>с подборкой 5 каталогов</p>
-                  </div>
-                  <svg class="button__icon">
-                    <use xlink:href="#buttonArrow"></use>
-                  </svg>
-                </button>
-                <input type="checkbox" id="privacy" name="approval" required>
-                <label for="privacy" class="sets__approval">
-                    <span class="check-circle"></span>
-                    <div>нажимая на кнопку, я соглашаюсь с <a href="#">политикой о конфиденциальности</a></div>
-                </label>
-              </form>
+              {$_modx->runSnippet("!AjaxForm", [
+        	'snippet' => 'FormIt',
+        	'form' => '@FILE chunks/form_sets_email.tpl',
+        	'hooks' => 'spam,email,FormItSaveForm', 
+        	'emailTpl' => '@FILE chunks/email_email.tpl',
+        	'emailSubject' => 'Запрос каталога с главной',
+		'emailTo' => $_modx->getPlaceholder("+conf_to_email"),
+        	'emailFrom' => $_modx->config.emailsender,
+        	'formName' => 'Получить каталог',
+        	'validate' => 'email:required',
+        	'successMessage' => 'Спасибо! Каталог отправлен на вашу почту.'
+    	       ])}
             </div>
             <div class="sets__right">
               <img src="/assets/templates/snegotehnika/img/mainPage/sets-bg.jpg" alt="" class="sets__right__bg">
